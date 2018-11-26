@@ -6,7 +6,10 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+
 import java.net.URI;
+import java.security.Principal;
+import java.util.Base64;
 import java.util.Optional;
 
 @CrossOrigin
@@ -21,6 +24,19 @@ public class MainController {
     @GetMapping(path = "/users")
     public @ResponseBody
     Iterable<User> getAllUsers() {
+        // This returns a JSON or XML with the users
+        return userRepository.findAll();
+    }
+
+    @RequestMapping("/login")
+    public @ResponseBody boolean login(@RequestBody User user) {
+        return
+                user.getName().equals("user") && user.getPassword().equals("password");
+    }
+
+    @GetMapping(path = "/usertest")
+    public @ResponseBody
+    Iterable<User> usertest() {
         // This returns a JSON or XML with the users
         return userRepository.findAll();
     }
