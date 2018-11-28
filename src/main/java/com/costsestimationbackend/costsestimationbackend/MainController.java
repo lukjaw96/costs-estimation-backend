@@ -30,15 +30,17 @@ public class MainController {
 
     @RequestMapping("/login")
     public @ResponseBody boolean login(@RequestBody User user) {
-        return
-                user.getName().equals("user") && user.getPassword().equals("password");
-    }
 
-    @GetMapping(path = "/usertest")
-    public @ResponseBody
-    Iterable<User> usertest() {
-        // This returns a JSON or XML with the users
-        return userRepository.findAll();
+//        return
+//                user.getLogin().equals("user") && user.getPassword().equals("user") ||
+//                        user.getLogin().equals("admin") && user.getPassword().equals("admin");
+        User foundUser = userRepository.findByLogin(user.getLogin())
+                .orElseThrow(() -> new UserNotFoundException());
+        if(foundUser.getPassword().equals(user.getPassword())){
+            return true;
+        }
+
+        return false;
     }
 
     //Create
@@ -60,7 +62,7 @@ public class MainController {
     User getUserById(@PathVariable Integer id) {
 
         return userRepository.findById(id)
-                .orElseThrow(() -> new UserNotFoundException(id));
+                .orElseThrow(() -> new UserNotFoundException());
     }
 
     //Update
