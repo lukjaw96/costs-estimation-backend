@@ -15,24 +15,23 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 public class BasicAuthConfiguration
         extends WebSecurityConfigurerAdapter {
 
-    @Autowired
-    private AppUserDetailService userDetailService;
+
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth)
             throws Exception {
-        auth.userDetailsService(userDetailsService)
 
-//        auth
-//                .inMemoryAuthentication()
-//                .withUser("user")
-//                .password("{noop}user")
-//                .roles("USERS");
-//        auth
-//                .inMemoryAuthentication()
-//                .withUser("admin")
-//                .password("{noop}admin")
-//                .roles("ADMIN");
+
+        auth
+                .inMemoryAuthentication()
+                .withUser("user")
+                .password("{noop}user")
+                .roles("USERS");
+        auth
+                .inMemoryAuthentication()
+                .withUser("admin")
+                .password("{noop}admin")
+                .roles("ADMIN");
     }
 
     @Override

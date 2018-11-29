@@ -39,7 +39,6 @@ public class MainController {
         if(foundUser.getPassword().equals(user.getPassword())){
             return true;
         }
-
         return false;
     }
 
