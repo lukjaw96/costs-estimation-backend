@@ -1,8 +1,8 @@
 package com.costsestimationbackend.costsestimationbackend;
 
-class UserNotFoundException extends RuntimeException{
+public class UserNotFoundException extends RuntimeException{
 
-    UserNotFoundException() {
+    public UserNotFoundException() {
         super("Could not find user ");
     }
 }

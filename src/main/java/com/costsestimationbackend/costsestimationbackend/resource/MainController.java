@@ -1,15 +1,17 @@
-package com.costsestimationbackend.costsestimationbackend;
+package com.costsestimationbackend.costsestimationbackend.resource;
 
+import com.costsestimationbackend.costsestimationbackend.UserNotFoundException;
+import com.costsestimationbackend.costsestimationbackend.model.User;
+import com.costsestimationbackend.costsestimationbackend.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 
 import java.net.URI;
-import java.security.Principal;
-import java.util.Base64;
 import java.util.Optional;
 
 @CrossOrigin
@@ -21,6 +23,7 @@ public class MainController {
     private UserRepository userRepository;
 
     //Read all
+    @PreAuthorize("hasAnyRole('ADMIN')")
     @GetMapping(path = "/users")
     public @ResponseBody
     Iterable<User> getAllUsers() {
@@ -28,19 +31,19 @@ public class MainController {
         return userRepository.findAll();
     }
 
-    @RequestMapping("/login")
-    public @ResponseBody boolean login(@RequestBody User user) {
-
-//        return
-//                user.getLogin().equals("user") && user.getPassword().equals("user") ||
-//                        user.getLogin().equals("admin") && user.getPassword().equals("admin");
-        User foundUser = userRepository.findByLogin(user.getLogin())
-                .orElseThrow(() -> new UserNotFoundException());
-        if(foundUser.getPassword().equals(user.getPassword())){
-            return true;
-        }
-        return false;
-    }
+//    @RequestMapping("/login")
+//    public @ResponseBody boolean login(@RequestBody User user) {
+//
+////        return
+////                user.getLogin().equals("user") && user.getPassword().equals("user") ||
+////                        user.getLogin().equals("admin") && user.getPassword().equals("admin");
+//        User foundUser = userRepository.findByLogin(user.getLogin())
+//                .orElseThrow(() -> new UserNotFoundException());
+//        if(foundUser.getPassword().equals(user.getPassword())){
+//            return true;
+//        }
+//        return false;
+//    }
 
     //Create
     @PostMapping("/users/add")

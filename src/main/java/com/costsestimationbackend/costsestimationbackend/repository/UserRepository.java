@@ -1,5 +1,6 @@
-package com.costsestimationbackend.costsestimationbackend;
+package com.costsestimationbackend.costsestimationbackend.repository;
 
+import com.costsestimationbackend.costsestimationbackend.model.User;
 import org.springframework.data.repository.CrudRepository;
 
 import java.util.Optional;

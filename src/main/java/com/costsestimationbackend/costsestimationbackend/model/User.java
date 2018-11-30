@@ -1,4 +1,4 @@
-package com.costsestimationbackend.costsestimationbackend;
+package com.costsestimationbackend.costsestimationbackend.model;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -7,6 +7,21 @@ import javax.persistence.Id;
 
 @Entity // This tells Hibernate to make a table out of this class
 public class User {
+
+	public User() {
+	}
+
+	public User(User user) {
+//		this.active = users.getActive();
+//		this.email = users.getEmail();
+		this.role = user.getRole();
+//		this.name = users.getName();
+//		this.lastName =users.getLastName();
+		this.id = user.getId();
+		this.password = user.getPassword();
+		this.login = user.getLogin();
+	}
+
 	public Integer getId() {
 		return id;
 	}
