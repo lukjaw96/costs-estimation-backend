@@ -1,29 +1,81 @@
 package com.costsestimationbackend.costsestimationbackend.service;
 
-import com.costsestimationbackend.costsestimationbackend.model.CustomUserDetails;
+//import com.costsestimationbackend.costsestimationbackend.model.CustomUserDetails;
 import com.costsestimationbackend.costsestimationbackend.model.User;
+import com.costsestimationbackend.costsestimationbackend.model.UserDto;
 import com.costsestimationbackend.costsestimationbackend.repository.UserRepository;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import java.util.Optional;
 
-@Service
+@Service(value = "userService")
 public class AppUserDetailsService implements UserDetailsService {
 
     @Autowired
     private UserRepository userRepository;
 
-    @Override
-    public UserDetails loadUserByUsername(String login) throws UsernameNotFoundException {
-        Optional<User> optionalUsers = userRepository.findByLogin(login);
+    @Autowired
+    private BCryptPasswordEncoder bcryptEncoder;
 
-        optionalUsers
-                .orElseThrow(() -> new UsernameNotFoundException("Username not found"));
-        return optionalUsers
-                .map(CustomUserDetails::new).get();
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+        User user = userRepository.findByUsername(username);
+        if(user == null){
+            throw new UsernameNotFoundException("Invalid username or password.");
+        }
+        //adding role
+        return new org.springframework.security.core.userdetails.User(user.getUsername(), user.getPassword(), getAuthority(user.getRole()));
+    }
+
+    private List<SimpleGrantedAuthority> getAuthority(String role) {
+        return Arrays.asList(new SimpleGrantedAuthority("ROLE_" + role));
+    }
+
+    public List<User> findAll() {
+        List<User> list = new ArrayList<>();
+        userRepository.findAll().iterator().forEachRemaining(list::add);
+        return list;
+    }
+
+    public void delete(int id) {
+        userRepository.deleteById(id);
+    }
+
+    public User findOne(String username) {
+        return userRepository.findByUsername(username);
+    }
+
+    public User findById(int id) {
+        Optional<User> optionalUser = userRepository.findById(id);
+        return optionalUser.isPresent() ? optionalUser.get() : null;
+    }
+
+    public UserDto update(UserDto userDto) {
+        User user = findById(userDto.getId());
+        if(user != null) {
+            BeanUtils.copyProperties(userDto, user, "password");
+            userRepository.save(user);
+        }
+        return userDto;
+    }
+
+    public User save(UserDto user) {
+        User newUser = new User();
+        newUser.setUsername(user.getUsername());
+        newUser.setFirstName(user.getFirstName());
+        newUser.setLastName(user.getLastName());
+        newUser.setPassword(bcryptEncoder.encode(user.getPassword()));
+        newUser.setAge(user.getAge());
+        newUser.setSalary(user.getSalary());
+        return userRepository.save(newUser);
     }
 }

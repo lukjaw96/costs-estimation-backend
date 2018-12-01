@@ -1,41 +1,70 @@
 package com.costsestimationbackend.costsestimationbackend.model;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
-@Entity // This tells Hibernate to make a table out of this class
+import javax.persistence.*;
+
+@Entity
+@Table(name = "user")
 public class User {
 
-	public User() {
-	}
+	@Id
+	@GeneratedValue(strategy= GenerationType.IDENTITY)
+	private int id;
+	@Column
+	private String firstName;
+	@Column
+	private String lastName;
+	@Column
+	private String username;
+	@Column
+	@JsonIgnore
+	private String password;
+	@Column
+	private long salary;
+	@Column
+	private int age;
+	@Column
+	private String role;
 
-	public User(User user) {
-//		this.active = users.getActive();
-//		this.email = users.getEmail();
-		this.role = user.getRole();
-//		this.name = users.getName();
-//		this.lastName =users.getLastName();
-		this.id = user.getId();
-		this.password = user.getPassword();
-		this.login = user.getLogin();
-	}
+    public String getRole() {
+        return role;
+    }
 
-	public Integer getId() {
+    public void setRole(String role) {
+        this.role = role;
+    }
+
+	public int getId() {
 		return id;
 	}
 
-	public void setId(Integer id) {
+	public void setId(int id) {
 		this.id = id;
 	}
 
-	public String getLogin() {
-		return login;
+	public String getFirstName() {
+		return firstName;
 	}
 
-	public void setLogin(String login) {
-		this.login = login;
+	public void setFirstName(String firstName) {
+		this.firstName = firstName;
+	}
+
+	public String getLastName() {
+		return lastName;
+	}
+
+	public void setLastName(String lastName) {
+		this.lastName = lastName;
+	}
+
+	public String getUsername() {
+		return username;
+	}
+
+	public void setUsername(String username) {
+		this.username = username;
 	}
 
 	public String getPassword() {
@@ -46,23 +75,20 @@ public class User {
 		this.password = password;
 	}
 
-	public String getRole() {
-		return role;
+	public long getSalary() {
+		return salary;
 	}
 
-	public void setRole(String role) {
-		this.role = role;
+	public void setSalary(long salary) {
+		this.salary = salary;
 	}
 
-	@Id
-    @GeneratedValue(strategy= GenerationType.AUTO)
-    private Integer id;
+	public int getAge() {
+		return age;
+	}
 
-	private String login;
-
-	private String password;
-
-	private String role;
-
+	public void setAge(int age) {
+		this.age = age;
+	}
 }
 
