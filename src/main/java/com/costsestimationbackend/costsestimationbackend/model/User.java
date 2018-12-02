@@ -3,6 +3,7 @@ package com.costsestimationbackend.costsestimationbackend.model;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @Table(name = "user")
@@ -10,37 +11,30 @@ public class User {
 
 	@Id
 	@GeneratedValue(strategy= GenerationType.IDENTITY)
-	private int id;
+	private int idUser;
+
 	@Column
 	private String firstName;
+
 	@Column
 	private String lastName;
+
 	@Column
 	private String username;
+
 	@Column
 	@JsonIgnore
 	private String password;
-	@Column
-	private long salary;
-	@Column
-	private int age;
+
 	@Column
 	private String role;
 
-    public String getRole() {
-        return role;
-    }
-
-    public void setRole(String role) {
-        this.role = role;
-    }
-
-	public int getId() {
-		return id;
+	public int getIdUser() {
+		return idUser;
 	}
 
-	public void setId(int id) {
-		this.id = id;
+	public void setIdUser(int idUser) {
+		this.idUser = idUser;
 	}
 
 	public String getFirstName() {
@@ -75,20 +69,20 @@ public class User {
 		this.password = password;
 	}
 
-	public long getSalary() {
-		return salary;
+	public String getRole() {
+		return role;
 	}
 
-	public void setSalary(long salary) {
-		this.salary = salary;
+	public void setRole(String role) {
+		this.role = role;
 	}
 
-	public int getAge() {
-		return age;
-	}
+	@ManyToMany
+	@JoinTable(
+			name="USER_REQUIREMENT",
+			joinColumns=@JoinColumn(name="idUser", referencedColumnName="idUser"),
+			inverseJoinColumns=@JoinColumn(name="idRequirement", referencedColumnName="idRequirement"))
+	private List<Requirement> requirements;
 
-	public void setAge(int age) {
-		this.age = age;
-	}
 }
 

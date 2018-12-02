@@ -1,6 +1,6 @@
 package com.costsestimationbackend.costsestimationbackend.resource;
 
-import com.costsestimationbackend.costsestimationbackend.config.JwtTokenUtil;
+import com.costsestimationbackend.costsestimationbackend.config.jwt.JwtTokenUtil;
 import com.costsestimationbackend.costsestimationbackend.model.ApiResponse;
 import com.costsestimationbackend.costsestimationbackend.model.AuthToken;
 import com.costsestimationbackend.costsestimationbackend.model.LoginUser;

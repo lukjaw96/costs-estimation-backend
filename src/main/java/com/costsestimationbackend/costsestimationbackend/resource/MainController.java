@@ -1,28 +1,18 @@
 package com.costsestimationbackend.costsestimationbackend.resource;
 
-import com.costsestimationbackend.costsestimationbackend.UserNotFoundException;
-import com.costsestimationbackend.costsestimationbackend.config.JwtTokenUtil;
+import com.costsestimationbackend.costsestimationbackend.config.jwt.JwtTokenUtil;
 import com.costsestimationbackend.costsestimationbackend.model.ApiResponse;
 import com.costsestimationbackend.costsestimationbackend.model.AuthToken;
 import com.costsestimationbackend.costsestimationbackend.model.LoginUser;
 import com.costsestimationbackend.costsestimationbackend.model.User;
-import com.costsestimationbackend.costsestimationbackend.repository.UserRepository;
 import com.costsestimationbackend.costsestimationbackend.service.AppUserDetailsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.AuthenticationException;
-import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
-
-
-import java.net.URI;
-import java.util.Optional;
 
 @CrossOrigin
 @Controller    // This means that this class is a Controller

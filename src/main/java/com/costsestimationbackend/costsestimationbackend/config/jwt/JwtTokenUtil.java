@@ -1,4 +1,4 @@
-package com.costsestimationbackend.costsestimationbackend.config;
+package com.costsestimationbackend.costsestimationbackend.config.jwt;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;

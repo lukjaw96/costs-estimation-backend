@@ -1,4 +1,4 @@
-package com.costsestimationbackend.costsestimationbackend.config;
+package com.costsestimationbackend.costsestimationbackend.config.jwt;
 
 import com.costsestimationbackend.costsestimationbackend.repository.UserRepository;
 import io.jsonwebtoken.ExpiredJwtException;
