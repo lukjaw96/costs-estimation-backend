@@ -23,7 +23,8 @@ public class User {
 	private String username;
 
 	@Column
-	@JsonIgnore
+	//why json ignore?
+//	@JsonIgnore
 	private String password;
 
 	@Column

@@ -19,7 +19,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Service(value = "userService")
-public class AppUserDetailsService implements UserDetailsService {
+public class UserService implements UserDetailsService {
 
     @Autowired
     private UserRepository userRepository;
@@ -70,7 +70,7 @@ public class AppUserDetailsService implements UserDetailsService {
 
     public User save(UserDto user) {
         User newUser = new User();
-        newUser.setUsername(user.getUsername());
+        newUser.setUsername("blah");
         newUser.setFirstName(user.getFirstName());
         newUser.setLastName(user.getLastName());
         newUser.setPassword(bcryptEncoder.encode(user.getPassword()));

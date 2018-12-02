@@ -28,7 +28,7 @@ import javax.annotation.Resource;
 public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
 //    @Autowired
-//    private AppUserDetailsService userDetailsService;
+//    private UserService userDetailsService;
 //
 //    @Autowired
 //    private JwtAuthenticationEntryPoint unauthorizedHandler;

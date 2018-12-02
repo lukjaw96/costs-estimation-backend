@@ -9,15 +9,6 @@ public class UserDto {
     private String password;
     private int age;
     private int salary;
-
-    public String getRole() {
-        return role;
-    }
-
-    public void setRole(String role) {
-        this.role = role;
-    }
-
     private String role;
 
     public int getId() {
@@ -74,5 +65,13 @@ public class UserDto {
 
     public void setSalary(int salary) {
         this.salary = salary;
+    }
+
+    public String getRole() {
+        return role;
+    }
+
+    public void setRole(String role) {
+        this.role = role;
     }
 }

@@ -5,7 +5,7 @@ import com.costsestimationbackend.costsestimationbackend.model.ApiResponse;
 import com.costsestimationbackend.costsestimationbackend.model.AuthToken;
 import com.costsestimationbackend.costsestimationbackend.model.LoginUser;
 import com.costsestimationbackend.costsestimationbackend.model.User;
-import com.costsestimationbackend.costsestimationbackend.service.AppUserDetailsService;
+import com.costsestimationbackend.costsestimationbackend.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -26,7 +26,7 @@ public class AuthenticationController {
     private JwtTokenUtil jwtTokenUtil;
 
     @Autowired
-    private AppUserDetailsService userService;
+    private UserService userService;
 
     @RequestMapping(value = "/generate-token", method = RequestMethod.POST)
     public ApiResponse<AuthToken> register(@RequestBody LoginUser loginUser) throws AuthenticationException {
