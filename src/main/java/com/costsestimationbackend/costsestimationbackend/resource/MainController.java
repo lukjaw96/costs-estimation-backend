@@ -1,10 +1,13 @@
 package com.costsestimationbackend.costsestimationbackend.resource;
 
 import com.costsestimationbackend.costsestimationbackend.config.jwt.JwtTokenUtil;
+import com.costsestimationbackend.costsestimationbackend.model.ApiResponse;
 import com.costsestimationbackend.costsestimationbackend.model.User;
+import com.costsestimationbackend.costsestimationbackend.model.UserDto;
 import com.costsestimationbackend.costsestimationbackend.repository.UserRepository;
 import com.costsestimationbackend.costsestimationbackend.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.web.bind.annotation.*;
 
@@ -28,8 +31,8 @@ public class MainController {
 
         //Create
     @PostMapping(path = "/users/add")
-    public void createUser(@RequestBody User user) {
-        User savedUser = userRepository.save(user);
+    public void createUser(@RequestBody UserDto user) {
+        User savedUser = userService.save(user);
 
 //        URI location = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}")
 //                .buildAndExpand(savedUser.getIdUser()).toUri();
@@ -38,6 +41,16 @@ public class MainController {
 
     }
 
+    @PutMapping(path = "/users/{id}")
+    public ApiResponse<UserDto> update(@RequestBody UserDto userDto) {
+        return new ApiResponse<>(HttpStatus.OK.value(), "User updated successfully.",userService.update(userDto));
+    }
+
+    @DeleteMapping("/users/{id}")
+    public ApiResponse<Void> delete(@PathVariable int id) {
+        userService.delete(id);
+        return new ApiResponse<>(HttpStatus.OK.value(), "User deleted successfully.", null);
+    }
 
 //
 ////    @RequestMapping("/login")

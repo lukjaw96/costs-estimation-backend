@@ -1,22 +1,25 @@
 package com.costsestimationbackend.costsestimationbackend.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
+import javax.persistence.*;
+import java.util.List;
+
 public class UserDto {
 
-    private int id;
+    private int idUser;
     private String firstName;
     private String lastName;
     private String username;
     private String password;
-    private int age;
-    private int salary;
     private String role;
 
-    public int getId() {
-        return id;
+    public int getIdUser() {
+        return idUser;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public void setIdUser(int idUser) {
+        this.idUser = idUser;
     }
 
     public String getFirstName() {
@@ -51,22 +54,6 @@ public class UserDto {
         this.password = password;
     }
 
-    public int getAge() {
-        return age;
-    }
-
-    public void setAge(int age) {
-        this.age = age;
-    }
-
-    public int getSalary() {
-        return salary;
-    }
-
-    public void setSalary(int salary) {
-        this.salary = salary;
-    }
-
     public String getRole() {
         return role;
     }
@@ -75,3 +62,4 @@ public class UserDto {
         this.role = role;
     }
 }
+
