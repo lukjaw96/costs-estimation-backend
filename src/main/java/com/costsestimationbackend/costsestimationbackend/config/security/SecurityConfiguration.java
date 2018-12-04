@@ -3,6 +3,7 @@ package com.costsestimationbackend.costsestimationbackend.config.security;
 import com.costsestimationbackend.costsestimationbackend.config.jwt.JwtAuthenticationEntryPoint;
 import com.costsestimationbackend.costsestimationbackend.config.jwt.JwtAuthenticationFilter;
 import com.costsestimationbackend.costsestimationbackend.repository.UserRepository;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -20,69 +21,14 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 
 import javax.annotation.Resource;
 
-
 @EnableJpaRepositories(basePackageClasses = UserRepository.class)
 @Configuration
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
-//    @Autowired
-//    private UserService userDetailsService;
-//
-//    @Autowired
-//    private JwtAuthenticationEntryPoint unauthorizedHandler;
-//
-//    @Override
-//    @Bean
-//    public AuthenticationManager authenticationManagerBean() throws Exception {
-//        return super.authenticationManagerBean();
-//    }
-//
-//    @Autowired
-//    public void globalUserDetails(AuthenticationManagerBuilder auth) throws Exception {
-//        auth.userDetailsService(userDetailsService)
-//                .passwordEncoder(encoder());
-//    }
-//
-//    @Bean
-//    public JwtAuthenticationFilter authenticationTokenFilterBean() throws Exception {
-//        return new JwtAuthenticationFilter();
-//    }
-//
-//    @Override
-//    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-//
-//        auth.userDetailsService(userDetailsService)
-//                .passwordEncoder(getPasswordEncoder());
-//    }
-//
-//    @Override
-//    protected void configure(HttpSecurity http) throws Exception {
-//
-//        http.csrf().disable();
-//        http.authorizeRequests()
-//                .antMatchers("/demo").authenticated()
-//                .anyRequest().permitAll()
-//                .and()
-//                .formLogin().permitAll();
-//    }
-//
-//    private PasswordEncoder getPasswordEncoder() {
-//        return new PasswordEncoder() {
-//            @Override
-//            public String encode(CharSequence charSequence) {
-//                return charSequence.toString();
-//            }
-//
-//            @Override
-//            public boolean matches(CharSequence charSequence, String s) {
-//                return true;
-//            }
-//        };
-//    }
-@Resource(name = "userService")
-private UserDetailsService userDetailsService;
+    @Resource(name = "userService")
+    private UserDetailsService userDetailsService;
 
     @Autowired
     private JwtAuthenticationEntryPoint unauthorizedHandler;
@@ -118,9 +64,7 @@ private UserDetailsService userDetailsService;
     }
 
     @Bean
-    public BCryptPasswordEncoder encoder(){
+    public BCryptPasswordEncoder encoder() {
         return new BCryptPasswordEncoder();
     }
-
-
 }

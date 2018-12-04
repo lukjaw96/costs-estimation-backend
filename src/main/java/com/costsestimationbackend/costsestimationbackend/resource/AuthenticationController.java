@@ -4,11 +4,10 @@ import com.costsestimationbackend.costsestimationbackend.config.jwt.JwtTokenUtil
 import com.costsestimationbackend.costsestimationbackend.model.ApiResponse;
 import com.costsestimationbackend.costsestimationbackend.model.AuthToken;
 import com.costsestimationbackend.costsestimationbackend.model.LoginUser;
-import com.costsestimationbackend.costsestimationbackend.model.User;
+import com.costsestimationbackend.costsestimationbackend.model.User.User;
 import com.costsestimationbackend.costsestimationbackend.service.UserService;
+
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.AuthenticationException;
@@ -33,16 +32,16 @@ public class AuthenticationController {
 
         authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(loginUser.getUsername(), loginUser.getPassword()));
         final User user = userService.findOne(loginUser.getUsername());
-        //dodanie roli
+        //add role
         final String role = userService.findOne(loginUser.getUsername()).getRole();
         System.out.println("role " + role);
         final String token = jwtTokenUtil.generateToken(user, role);
-        return new ApiResponse<>(200, "success",new AuthToken(token, user.getUsername()));
+        return new ApiResponse<>(200, "success", new AuthToken(token, user.getUsername(), user.getIdUser(), userService.findOne(loginUser.getUsername()).getRole()));
     }
 
-    @PreAuthorize("hasAnyRole('USER')")
-    @GetMapping("/users/{id}")
-    public ApiResponse<User> getOne(@PathVariable int id){
-        return new ApiResponse<>(HttpStatus.OK.value(), "User fetched successfully.",userService.findById(id));
-    }
+//    @PreAuthorize("hasAnyRole('USER')")
+//    @GetMapping("/users/{id}")
+//    public ApiResponse<User> getOne(@PathVariable int id){
+//        return new ApiResponse<>(HttpStatus.OK.value(), "User fetched successfully.",userService.findById(id));
+//    }
 }

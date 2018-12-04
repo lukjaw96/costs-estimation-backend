@@ -1,15 +1,8 @@
 package com.costsestimationbackend.costsestimationbackend.repository;
 
-import com.costsestimationbackend.costsestimationbackend.model.User;
+import com.costsestimationbackend.costsestimationbackend.model.User.User;
 import org.springframework.data.repository.CrudRepository;
 
-import java.util.Optional;
-
-// This will be AUTO IMPLEMENTED by Spring into a Bean called userRepository
-// CRUD refers Create, Read, Update, Delete
-
 public interface UserRepository extends CrudRepository<User, Integer> {
-    //Optional<User> findByLogin(String login);
-
     User findByUsername(String username);
 }

@@ -1,7 +1,7 @@
 package com.costsestimationbackend.costsestimationbackend.config.jwt;
 
 import com.costsestimationbackend.costsestimationbackend.repository.UserRepository;
-import io.jsonwebtoken.ExpiredJwtException;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -10,13 +10,17 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
 import org.springframework.web.filter.OncePerRequestFilter;
+
 import io.jsonwebtoken.SignatureException;
+import io.jsonwebtoken.ExpiredJwtException;
 
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
 import java.io.IOException;
+
 import java.util.Arrays;
 
 import static com.costsestimationbackend.costsestimationbackend.model.Constants.HEADER_STRING;
@@ -40,14 +44,14 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         String authToken = null;
         System.out.println("header" + header);
         if (header != null && header.startsWith(TOKEN_PREFIX)) {
-            authToken = header.replace(TOKEN_PREFIX,"");
+            authToken = header.replace(TOKEN_PREFIX, "");
             try {
                 username = jwtTokenUtil.getUsernameFromToken(authToken);
             } catch (IllegalArgumentException e) {
                 logger.error("an error occured during getting username from token", e);
             } catch (ExpiredJwtException e) {
                 logger.warn("the token is expired and not valid anymore", e);
-            } catch(SignatureException e){
+            } catch (SignatureException e) {
                 logger.error("Authentication Failed. Username or Password not valid.");
             }
         } else {
@@ -66,7 +70,6 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
                 SecurityContextHolder.getContext().setAuthentication(authentication);
             }
         }
-
         chain.doFilter(req, res);
     }
 }

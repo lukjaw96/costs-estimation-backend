@@ -1,9 +1,10 @@
 package com.costsestimationbackend.costsestimationbackend.service.impl;
 
-import com.costsestimationbackend.costsestimationbackend.model.User;
-import com.costsestimationbackend.costsestimationbackend.model.UserDto;
+import com.costsestimationbackend.costsestimationbackend.model.User.User;
+import com.costsestimationbackend.costsestimationbackend.model.User.UserDto;
 import com.costsestimationbackend.costsestimationbackend.repository.UserRepository;
 import com.costsestimationbackend.costsestimationbackend.service.UserService;
+
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -28,10 +29,9 @@ public class UserServiceImpl implements UserDetailsService, UserService {
     private BCryptPasswordEncoder bcryptEncoder;
 
 
-
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         User user = userRepository.findByUsername(username);
-        if(user == null){
+        if (user == null) {
             throw new UsernameNotFoundException("Invalid username or password.");
         }
         //adding role
@@ -67,7 +67,7 @@ public class UserServiceImpl implements UserDetailsService, UserService {
     @Override
     public UserDto update(UserDto userDto) {
         User user = findById(userDto.getIdUser());
-        if(user != null) {
+        if (user != null) {
             BeanUtils.copyProperties(userDto, user, "password");
             userRepository.save(user);
         }

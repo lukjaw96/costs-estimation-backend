@@ -8,7 +8,7 @@ import java.util.List;
 public class Requirement {
 
     @Id
-    @GeneratedValue(strategy= GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int idRequirement;
 
     @Column
@@ -76,8 +76,8 @@ public class Requirement {
 
     @ManyToMany
     @JoinTable(
-            name="REQUIREMENT_PROJECT",
-            joinColumns=@JoinColumn(name="idRequirement", referencedColumnName="idRequirement"),
-            inverseJoinColumns=@JoinColumn(name="idProject", referencedColumnName="idProject"))
+            name = "REQUIREMENT_PROJECT",
+            joinColumns = @JoinColumn(name = "idRequirement", referencedColumnName = "idRequirement"),
+            inverseJoinColumns = @JoinColumn(name = "idProject", referencedColumnName = "idProject"))
     private List<Project> projects;
 }

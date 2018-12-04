@@ -6,7 +6,7 @@ import io.jsonwebtoken.SignatureAlgorithm;
 
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
-import com.costsestimationbackend.costsestimationbackend.model.User;
+import com.costsestimationbackend.costsestimationbackend.model.User.User;
 import org.springframework.stereotype.Component;
 
 import java.io.Serializable;
@@ -58,9 +58,7 @@ public class JwtTokenUtil implements Serializable {
 
         return Jwts.builder()
                 .setClaims(claims)
-                //.setIssuer("http://devglan.com")
-                //.setIssuedAt(new Date(System.currentTimeMillis()))
-                .setExpiration(new Date(System.currentTimeMillis() + ACCESS_TOKEN_VALIDITY_SECONDS*1000))
+                .setExpiration(new Date(System.currentTimeMillis() + ACCESS_TOKEN_VALIDITY_SECONDS * 1000))
                 .signWith(SignatureAlgorithm.HS256, SIGNING_KEY)
                 .compact();
     }
