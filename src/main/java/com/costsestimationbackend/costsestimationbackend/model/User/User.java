@@ -1,6 +1,7 @@
 package com.costsestimationbackend.costsestimationbackend.model.User;
 
 import com.costsestimationbackend.costsestimationbackend.model.Requirement;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
 import java.util.List;
@@ -19,11 +20,12 @@ public class User {
     @Column
     private String lastName;
 
-    @Column
+    @Column(nullable = false, unique = true)
     private String username;
 
-    @Column
-//	@JsonIgnore
+    @Column(nullable = false)
+	@JsonIgnore
+    //used to ignore sending password when getting all users
     private String password;
 
     @Column

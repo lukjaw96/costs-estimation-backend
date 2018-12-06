@@ -2,12 +2,15 @@ package com.costsestimationbackend.costsestimationbackend.service.impl;
 
 import com.costsestimationbackend.costsestimationbackend.model.User.User;
 import com.costsestimationbackend.costsestimationbackend.model.User.UserDto;
+import com.costsestimationbackend.costsestimationbackend.model.User.UserPasswordUpdate;
 import com.costsestimationbackend.costsestimationbackend.repository.UserRepository;
 import com.costsestimationbackend.costsestimationbackend.service.UserService;
 
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -28,7 +31,6 @@ public class UserServiceImpl implements UserDetailsService, UserService {
     @Autowired
     private BCryptPasswordEncoder bcryptEncoder;
 
-
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         User user = userRepository.findByUsername(username);
         if (user == null) {
@@ -48,9 +50,25 @@ public class UserServiceImpl implements UserDetailsService, UserService {
         return list;
     }
 
+    public void updatePassword(UserPasswordUpdate userPasswordUpdate) {
+        User user = findById(userPasswordUpdate.getIdUser());
+        userPasswordUpdate.setPassword(bcryptEncoder.encode(userPasswordUpdate.getPassword()));
+
+        if (user != null) {
+            BeanUtils.copyProperties(userPasswordUpdate, user, "idUser", "oldPassword");
+            userRepository.save(user);
+        }
+    }
+
     @Override
     public void delete(int id) {
-        userRepository.deleteById(id);
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        String username = auth.getName();
+        Integer idUser = findByUsername(username).getIdUser();
+
+        if (!(id == idUser)) {
+            userRepository.deleteById(id);
+        }
     }
 
     @Override
@@ -65,10 +83,34 @@ public class UserServiceImpl implements UserDetailsService, UserService {
     }
 
     @Override
+    public User findByUsername(String username) {
+        User user = userRepository.findByUsername(username);
+        return user;
+    }
+
+    @Override
+    public UserDto updateSelf(UserDto userDto) {
+
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        String username = auth.getName();
+
+        if (userDto.getUsername().equals(username)) {
+            User user = findByUsername(userDto.getUsername());
+            if (user != null) {
+                BeanUtils.copyProperties(userDto, user, "idUser", "username", "role", "password");
+                userRepository.save(user);
+            }
+            return userDto;
+        } else {
+            return null;
+        }
+    }
+
+    @Override
     public UserDto update(UserDto userDto) {
         User user = findById(userDto.getIdUser());
         if (user != null) {
-            BeanUtils.copyProperties(userDto, user, "password");
+            BeanUtils.copyProperties(userDto, user, "password", "idUser", "username");
             userRepository.save(user);
         }
         return userDto;

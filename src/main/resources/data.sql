@@ -1,0 +1,1 @@
+INSERT INTO user(id_user, first_name, last_name, password, role, username) VALUES(1, 'adminfirst', 'adminlast', '$2a$04$I9Q2sDc4QGGg5WNTLmsz0.fvGv3OjoZyj81PrSFyGOqMphqfS2qKu', 'ADMIN', 'admin');

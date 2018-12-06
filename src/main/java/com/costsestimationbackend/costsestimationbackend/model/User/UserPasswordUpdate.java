@@ -1,8 +1,18 @@
 package com.costsestimationbackend.costsestimationbackend.model.User;
 
-import com.costsestimationbackend.costsestimationbackend.model.User.UserDto;
+public class UserPasswordUpdate {
 
-public class UserPasswordUpdate extends UserDto {
+    private Integer idUser;
+    private String oldPassword;
+    private String password;
+
+    public Integer getIdUser() {
+        return idUser;
+    }
+
+    public void setIdUser(Integer idUser) {
+        this.idUser = idUser;
+    }
 
     public String getOldPassword() {
         return oldPassword;
@@ -12,6 +22,11 @@ public class UserPasswordUpdate extends UserDto {
         this.oldPassword = oldPassword;
     }
 
-    private String oldPassword;
+    public String getPassword() {
+        return password;
+    }
 
+    public void setPassword(String password) {
+        this.password = password;
+    }
 }

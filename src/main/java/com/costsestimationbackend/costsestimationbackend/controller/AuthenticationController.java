@@ -1,4 +1,4 @@
-package com.costsestimationbackend.costsestimationbackend.resource;
+package com.costsestimationbackend.costsestimationbackend.controller;
 
 import com.costsestimationbackend.costsestimationbackend.config.jwt.JwtTokenUtil;
 import com.costsestimationbackend.costsestimationbackend.model.ApiResponse;
@@ -34,14 +34,7 @@ public class AuthenticationController {
         final User user = userService.findOne(loginUser.getUsername());
         //add role
         final String role = userService.findOne(loginUser.getUsername()).getRole();
-        System.out.println("role " + role);
         final String token = jwtTokenUtil.generateToken(user, role);
         return new ApiResponse<>(200, "success", new AuthToken(token, user.getUsername(), user.getIdUser(), userService.findOne(loginUser.getUsername()).getRole()));
     }
-
-//    @PreAuthorize("hasAnyRole('USER')")
-//    @GetMapping("/users/{id}")
-//    public ApiResponse<User> getOne(@PathVariable int id){
-//        return new ApiResponse<>(HttpStatus.OK.value(), "User fetched successfully.",userService.findById(id));
-//    }
 }

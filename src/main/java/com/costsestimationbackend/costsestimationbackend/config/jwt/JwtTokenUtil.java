@@ -50,9 +50,6 @@ public class JwtTokenUtil implements Serializable {
     }
 
     private String doGenerateToken(String subject, String role) {
-
-        System.out.println("subject" + subject);
-
         Claims claims = Jwts.claims().setSubject(subject);
         claims.put("scopes", Arrays.asList(new SimpleGrantedAuthority("ROLE_" + role)));
 
