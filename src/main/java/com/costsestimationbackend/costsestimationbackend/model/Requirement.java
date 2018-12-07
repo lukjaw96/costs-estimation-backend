@@ -1,5 +1,7 @@
 package com.costsestimationbackend.costsestimationbackend.model;
 
+import com.costsestimationbackend.costsestimationbackend.model.Project.Project;
+
 import javax.persistence.*;
 import java.util.List;
 

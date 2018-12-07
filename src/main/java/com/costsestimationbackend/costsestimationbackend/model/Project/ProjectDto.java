@@ -1,31 +1,19 @@
-package com.costsestimationbackend.costsestimationbackend.model;
+package com.costsestimationbackend.costsestimationbackend.model.Project;
 
-import javax.persistence.*;
+public class ProjectDto {
 
-@Entity
-@Table(name = "PROJECT")
-public class Project {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int idProject;
 
-    @Column
     private String name;
 
-    @Column
     private String description;
 
-    @Column
     private String author;
 
-    @Column
     private String status;
 
-    @Column
     private String startDate;
 
-    @Column
     private String endDate;
 
     public int getIdProject() {
@@ -83,5 +71,4 @@ public class Project {
     public void setEndDate(String endDate) {
         this.endDate = endDate;
     }
-
 }
