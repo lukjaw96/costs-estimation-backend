@@ -1,31 +1,17 @@
-package com.costsestimationbackend.costsestimationbackend.model;
+package com.costsestimationbackend.costsestimationbackend.model.Requirement;
 
-import com.costsestimationbackend.costsestimationbackend.model.Project.Project;
+public class RequirementDto {
 
-import javax.persistence.*;
-import java.util.List;
-
-@Entity
-@Table(name = "REQUIREMENT")
-public class Requirement {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int idRequirement;
 
-    @Column
     private String name;
 
-    @Column
     private String description;
 
-    @Column
     private String author;
 
-    @Column
     private String creationDate;
 
-    @Column
     private String finalCost;
 
     public int getIdRequirement() {
@@ -76,10 +62,4 @@ public class Requirement {
         this.finalCost = finalCost;
     }
 
-    @ManyToMany
-    @JoinTable(
-            name = "REQUIREMENT_PROJECT",
-            joinColumns = @JoinColumn(name = "idRequirement", referencedColumnName = "idRequirement"),
-            inverseJoinColumns = @JoinColumn(name = "idProject", referencedColumnName = "idProject"))
-    private List<Project> projects;
 }

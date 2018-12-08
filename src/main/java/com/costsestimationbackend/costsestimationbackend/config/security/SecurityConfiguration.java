@@ -56,8 +56,8 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
         http.cors().and().csrf().disable().
                 authorizeRequests()
                 //for swagger checking
-                .antMatchers("/**").permitAll()
-                //.antMatchers("/token/*", "/signup").permitAll()
+                //.antMatchers("/**").permitAll()
+                .antMatchers("/token/*", "/signup").permitAll()
                 .anyRequest().authenticated()
                 .and()
                 .exceptionHandling().authenticationEntryPoint(unauthorizedHandler).and()

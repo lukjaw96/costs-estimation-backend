@@ -1,6 +1,6 @@
 package com.costsestimationbackend.costsestimationbackend.model.User;
 
-import com.costsestimationbackend.costsestimationbackend.model.Requirement;
+import com.costsestimationbackend.costsestimationbackend.model.Requirement.Requirement;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
