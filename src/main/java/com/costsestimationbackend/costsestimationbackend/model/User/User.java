@@ -98,12 +98,14 @@ public class User {
         this.requirements = requirements;
     }
 
-
     @OneToMany(mappedBy = "user")
+    private List<Estimation> estimations;
+
+
     public List<Estimation> getEstimations() {
         return estimations;
     }
-    private List<Estimation> estimations = new ArrayList<Estimation>();
+
 
     public void setEstimations(List<Estimation> estimations) {
         this.estimations = estimations;

@@ -91,11 +91,14 @@ public class Requirement {
     }
 
     @OneToMany(mappedBy = "requirement")
+    private List<Estimation> estimations;
+
+
     public List<Estimation> getEstimations() {
         return estimations;
     }
 
-    private List<Estimation> estimations = new ArrayList<Estimation>();
+
 
 
     public void setEstimations(List<Estimation> estimations) {

@@ -8,14 +8,23 @@ import javax.persistence.*;
 @Entity
 @Table(name = "ESTIMATION")
 public class Estimation {
+
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int idEstimation;
+
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "id_user")
     private User user;
+
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "id_requirement")
     private Requirement requirement;
 
     private int estimation;
 
-    @Id
-    @GeneratedValue
+
     public long getIdEstimation() {
         return idEstimation;
     }
@@ -25,8 +34,7 @@ public class Estimation {
     }
 
 
-    @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "id_user")
+
     public User getUser() {
         return user;
     }
@@ -36,8 +44,7 @@ public class Estimation {
     }
 
 
-    @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "id_requirement")
+
     public Requirement getRequirement() {
         return requirement;
     }
