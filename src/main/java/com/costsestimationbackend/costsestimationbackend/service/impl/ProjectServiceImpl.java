@@ -42,16 +42,15 @@ public class ProjectServiceImpl implements ProjectService {
 
 
         for (Project pro : list) {
-            ProjectDto newProject = new ProjectDto();
-
-            newProject.setIdProject(pro.getIdProject());
-            newProject.setName(pro.getName());
-            newProject.setDescription(pro.getDescription());
-            newProject.setAuthor(pro.getAuthor());
-            newProject.setStatus(pro.getStatus());
-            newProject.setStartDate(pro.getStartDate());
-            newProject.setEndDate(pro.getEndDate());
-
+            ProjectDto newProject = new ProjectDto(
+                    pro.getIdProject(),
+                    pro.getName(),
+                    pro.getDescription(),
+                    pro.getAuthor(),
+                    pro.getStatus(),
+                    pro.getStartDate(),
+                    pro.getEndDate()
+            );
             listProjectsDto.add(newProject);
         }
 
@@ -111,13 +110,15 @@ public class ProjectServiceImpl implements ProjectService {
 
         List<RequirementDto> listRequirements = new ArrayList<>();
         for (Requirement req : project.getRequirements()) {
-            RequirementDto newRequirement = new RequirementDto();
-            newRequirement.setIdRequirement(req.getIdRequirement());
-            newRequirement.setName(req.getName());
-            newRequirement.setDescription(req.getDescription());
-            newRequirement.setAuthor(req.getAuthor());
-            newRequirement.setCreationDate(req.getCreationDate());
-            newRequirement.setFinalCost(req.getFinalCost());
+
+            RequirementDto newRequirement = new RequirementDto(
+                    req.getIdRequirement(),
+                    req.getName(),
+                    req.getDescription(),
+                    req.getAuthor(),
+                    req.getCreationDate(),
+                    req.getFinalCost()
+            );
             listRequirements.add(newRequirement);
         }
         return listRequirements;

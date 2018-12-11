@@ -71,4 +71,20 @@ public class ProjectDto {
     public void setEndDate(String endDate) {
         this.endDate = endDate;
     }
+
+    public ProjectDto(int idProject,
+                      String name,
+                      String description,
+                      String author,
+                      String status,
+                      String startDate,
+                      String endDate) {
+        this.idProject = idProject;
+        this.name = name;
+        this.description = description;
+        this.author = author;
+        this.status = status;
+        this.startDate = startDate;
+        this.endDate = endDate;
+    }
 }

@@ -56,5 +56,19 @@ public class UserDto {
     public void setRole(String role) {
         this.role = role;
     }
+
+    public UserDto(int idUser,
+                   String firstName,
+                   String lastName,
+                   String username,
+                   String password,
+                   String role) {
+        this.idUser = idUser;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.username = username;
+        this.password = password;
+        this.role = role;
+    }
 }
 

@@ -87,7 +87,6 @@ public class Project {
         this.endDate = endDate;
     }
 
-
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(
             name = "REQUIREMENT_PROJECT",

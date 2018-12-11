@@ -62,4 +62,17 @@ public class RequirementDto {
         this.finalCost = finalCost;
     }
 
+    public RequirementDto(int idRequirement,
+                          String name,
+                          String description,
+                          String author,
+                          String creationDate,
+                          String finalCost) {
+        this.idRequirement = idRequirement;
+        this.name = name;
+        this.description = description;
+        this.author = author;
+        this.creationDate = creationDate;
+        this.finalCost = finalCost;
+    }
 }

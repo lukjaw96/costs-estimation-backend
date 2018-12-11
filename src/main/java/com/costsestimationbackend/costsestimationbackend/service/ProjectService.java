@@ -20,6 +20,6 @@ public interface ProjectService {
 
     void addRequirementToProject(int idProject, int idRequirement);
 
-    //getting all requirements of specific project
     List<RequirementDto> getProjectRequirements(int idProject);
+
 }

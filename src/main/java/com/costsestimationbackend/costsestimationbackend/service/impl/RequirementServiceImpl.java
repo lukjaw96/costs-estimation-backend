@@ -1,7 +1,5 @@
 package com.costsestimationbackend.costsestimationbackend.service.impl;
 
-import com.costsestimationbackend.costsestimationbackend.model.Project.Project;
-import com.costsestimationbackend.costsestimationbackend.model.Project.ProjectDto;
 import com.costsestimationbackend.costsestimationbackend.model.Requirement.Requirement;
 import com.costsestimationbackend.costsestimationbackend.model.Requirement.RequirementDto;
 import com.costsestimationbackend.costsestimationbackend.repository.RequirementRepository;
@@ -32,38 +30,21 @@ public class RequirementServiceImpl implements RequirementService {
     }
 
     public List<RequirementDto> findAll() {
-
-
         List<Requirement> list = new ArrayList<>();
         requirementRepository.findAll().iterator().forEachRemaining(list::add);
-
-        //Hibernate.initialize(project.getRequirements());
-
         List<RequirementDto> listRequirementsDto = new ArrayList<>();
-
-
         for (Requirement req : list) {
-            RequirementDto newRequirement = new RequirementDto();
-
-            newRequirement.setIdRequirement(req.getIdRequirement());
-            newRequirement.setName(req.getName());
-            newRequirement.setDescription(req.getDescription());
-            newRequirement.setAuthor(req.getAuthor());
-            newRequirement.setCreationDate(req.getCreationDate());
-            newRequirement.setFinalCost(req.getFinalCost());
-
+            RequirementDto newRequirement = new RequirementDto(
+                    req.getIdRequirement(),
+                    req.getName(),
+                    req.getDescription(),
+                    req.getAuthor(),
+                    req.getCreationDate(),
+                    req.getFinalCost()
+            );
             listRequirementsDto.add(newRequirement);
         }
         return listRequirementsDto;
-
-
-
-
-
-
-//        List<Requirement> list = new ArrayList<>();
-//        requirementRepository.findAll().iterator().forEachRemaining(list::add);
-//        return list;
     }
 
     @Transactional
@@ -78,14 +59,8 @@ public class RequirementServiceImpl implements RequirementService {
         newRequirement.setCreationDate(requirement.getCreationDate());
         newRequirement.setFinalCost(requirement.getFinalCost());
 
-        //User user = userRepository.findByUsername("admin");
-//
-//        Hibernate.initialize(user.getRequirements());
-//
-        //user.getRequirements().add(newRequirement);
         return requirementRepository.save(newRequirement);
     }
-
 
     @Override
     public RequirementDto update(RequirementDto requirementDto) {
@@ -102,12 +77,10 @@ public class RequirementServiceImpl implements RequirementService {
         requirementRepository.deleteById(id);
     }
 
-
     @Override
     public List<Requirement> findByIdProject() {
         List<Requirement> list = new ArrayList<>();
         requirementRepository.findByProjects_IdProject(1).iterator().forEachRemaining(list::add);
-        System.out.println(list);
         return list;
     }
 }

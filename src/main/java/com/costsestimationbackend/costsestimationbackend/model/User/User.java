@@ -79,7 +79,7 @@ public class User {
         this.role = role;
     }
 
-    @ManyToMany(fetch = FetchType.EAGER)
+    @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(
             name = "USER_REQUIREMENT",
             joinColumns = @JoinColumn(name = "idUser", referencedColumnName = "idUser"),
