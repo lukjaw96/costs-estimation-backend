@@ -2,12 +2,17 @@ package com.costsestimationbackend.costsestimationbackend.service.impl;
 
 import com.costsestimationbackend.costsestimationbackend.model.Project.Project;
 import com.costsestimationbackend.costsestimationbackend.model.Project.ProjectDto;
+import com.costsestimationbackend.costsestimationbackend.model.Requirement.Requirement;
+import com.costsestimationbackend.costsestimationbackend.model.Requirement.RequirementDto;
 import com.costsestimationbackend.costsestimationbackend.repository.ProjectRepository;
+import com.costsestimationbackend.costsestimationbackend.repository.RequirementRepository;
 import com.costsestimationbackend.costsestimationbackend.service.ProjectService;
+import org.hibernate.Hibernate;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -17,6 +22,9 @@ public class ProjectServiceImpl implements ProjectService {
 
     @Autowired
     private ProjectRepository projectRepository;
+
+    @Autowired
+    private RequirementRepository requirementRepository;
 
     @Override
     public Project findById(int id) {
@@ -56,5 +64,36 @@ public class ProjectServiceImpl implements ProjectService {
     @Override
     public void delete(int id) {
         projectRepository.deleteById(id);
+    }
+
+    //add requirement to project
+    @Transactional
+    @Override
+    public void addRequirementToProject(int idProject, int idRequirement) {
+        Optional<Requirement> optionalRequirement = requirementRepository.findById(idRequirement);
+        Requirement requirement = optionalRequirement.isPresent() ? optionalRequirement.get() : null;
+        Optional<Project> optionalProject = projectRepository.findById(idProject);
+        Project project = optionalProject.isPresent() ? optionalProject.get() : null;
+        project.getRequirements().add(requirement);
+    }
+
+    //get project requirements
+    @Transactional
+    @Override
+    public List<RequirementDto> getProjectRequirements(int idProject) {
+        Optional<Project> optionalProject = projectRepository.findById(idProject);
+        Project project = optionalProject.isPresent() ? optionalProject.get() : null;
+        Hibernate.initialize(project.getRequirements());
+        List<RequirementDto> listRequirements = new ArrayList<>();
+        for (Requirement req : project.getRequirements()) {
+            RequirementDto newRequirement = new RequirementDto();
+            newRequirement.setName(req.getName());
+            newRequirement.setDescription(req.getDescription());
+            newRequirement.setAuthor(req.getAuthor());
+            newRequirement.setCreationDate(req.getCreationDate());
+            newRequirement.setFinalCost(req.getFinalCost());
+            listRequirements.add(newRequirement);
+        }
+        return listRequirements;
     }
 }

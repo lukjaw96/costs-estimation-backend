@@ -76,11 +76,17 @@ public class Requirement {
         this.finalCost = finalCost;
     }
 
-    @ManyToMany
-    @JoinTable(
-            name = "REQUIREMENT_PROJECT",
-            joinColumns = @JoinColumn(name = "idRequirement", referencedColumnName = "idRequirement"),
-            inverseJoinColumns = @JoinColumn(name = "idProject", referencedColumnName = "idProject"))
+    @ManyToMany(fetch = FetchType.LAZY,
+            mappedBy = "requirements")
     private List<Project> projects;
+
+    public List<Project> getProjects() {
+        return projects;
+    }
+
+    public void setProjects(List<Project> projects) {
+        this.projects = projects;
+    }
 }
+
 

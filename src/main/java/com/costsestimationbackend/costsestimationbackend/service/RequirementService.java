@@ -1,7 +1,5 @@
 package com.costsestimationbackend.costsestimationbackend.service;
 
-import com.costsestimationbackend.costsestimationbackend.model.Project.Project;
-import com.costsestimationbackend.costsestimationbackend.model.Project.ProjectDto;
 import com.costsestimationbackend.costsestimationbackend.model.Requirement.Requirement;
 import com.costsestimationbackend.costsestimationbackend.model.Requirement.RequirementDto;
 
@@ -19,5 +17,6 @@ public interface RequirementService {
 
     RequirementDto update(RequirementDto requirementDto);
 
-//    List<Requirement> findByIdProject();
+    List<Requirement> findByIdProject();
+
 }

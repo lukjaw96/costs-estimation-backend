@@ -21,6 +21,7 @@ public class RequirementController {
     @GetMapping(path = "/requirements")
     public ApiResponse<List<Requirement>> getAllRequirements(){
         return new ApiResponse<>(HttpStatus.OK.value(), "Requirements list fetched successfully.", requirementService.findAll());
+//        return new ApiResponse<>(HttpStatus.OK.value(), "Requirements list fetched successfully.", requirementService.findByIdProject());
     }
 
     @GetMapping("/requirements/{id}")

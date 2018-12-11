@@ -1,17 +1,15 @@
 package com.costsestimationbackend.costsestimationbackend.service.impl;
 
-import com.costsestimationbackend.costsestimationbackend.model.Project.Project;
-import com.costsestimationbackend.costsestimationbackend.model.Project.ProjectDto;
 import com.costsestimationbackend.costsestimationbackend.model.Requirement.Requirement;
 import com.costsestimationbackend.costsestimationbackend.model.Requirement.RequirementDto;
-import com.costsestimationbackend.costsestimationbackend.repository.ProjectRepository;
 import com.costsestimationbackend.costsestimationbackend.repository.RequirementRepository;
+import com.costsestimationbackend.costsestimationbackend.repository.UserRepository;
 import com.costsestimationbackend.costsestimationbackend.service.RequirementService;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import javax.persistence.Column;
+import javax.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -21,6 +19,9 @@ public class RequirementServiceImpl implements RequirementService {
 
     @Autowired
     private RequirementRepository requirementRepository;
+
+    @Autowired
+    private UserRepository userRepository;
 
     @Override
     public Requirement findById(int id) {
@@ -34,6 +35,7 @@ public class RequirementServiceImpl implements RequirementService {
         return list;
     }
 
+    @Transactional
     @Override
     public Requirement save(RequirementDto requirement) {
         Requirement newRequirement = new Requirement();
@@ -43,6 +45,12 @@ public class RequirementServiceImpl implements RequirementService {
         newRequirement.setAuthor(requirement.getAuthor());
         newRequirement.setCreationDate(requirement.getCreationDate());
         newRequirement.setFinalCost(requirement.getFinalCost());
+
+        //User user = userRepository.findByUsername("admin");
+//
+//        Hibernate.initialize(user.getRequirements());
+//
+        //user.getRequirements().add(newRequirement);
         return requirementRepository.save(newRequirement);
     }
 
@@ -62,12 +70,12 @@ public class RequirementServiceImpl implements RequirementService {
         requirementRepository.deleteById(id);
     }
 
-//    @Override
-//    public List<Requirement> findByIdProject() {
-//        List<Requirement> list = new ArrayList<>();
-//        requirementRepository.findByProjects_IdProject("1").iterator().forEachRemaining(list::add);
-//        System.out.println(list);
-//        //list = requirementRepository.findByProjects_IdProject("1");
-//        return list;
-//    }
+
+    @Override
+    public List<Requirement> findByIdProject() {
+        List<Requirement> list = new ArrayList<>();
+        requirementRepository.findByProjects_IdProject(1).iterator().forEachRemaining(list::add);
+        System.out.println(list);
+        return list;
+    }
 }

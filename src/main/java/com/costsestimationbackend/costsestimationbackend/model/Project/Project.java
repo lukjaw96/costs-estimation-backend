@@ -1,6 +1,9 @@
 package com.costsestimationbackend.costsestimationbackend.model.Project;
 
+import com.costsestimationbackend.costsestimationbackend.model.Requirement.Requirement;
+
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @Table(name = "PROJECT")
@@ -82,6 +85,22 @@ public class Project {
 
     public void setEndDate(String endDate) {
         this.endDate = endDate;
+    }
+
+
+    @ManyToMany(fetch = FetchType.LAZY)
+    @JoinTable(
+            name = "REQUIREMENT_PROJECT",
+            joinColumns = @JoinColumn(name = "idProject", referencedColumnName = "idProject"),
+            inverseJoinColumns = @JoinColumn(name = "idRequirement", referencedColumnName = "idRequirement"))
+    List<Requirement> requirements;
+
+    public List<Requirement> getRequirements() {
+        return requirements;
+    }
+
+    public void setRequirements(List<Requirement> requirements) {
+        this.requirements = requirements;
     }
 
 }

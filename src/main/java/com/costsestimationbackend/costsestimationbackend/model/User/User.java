@@ -79,12 +79,20 @@ public class User {
         this.role = role;
     }
 
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
             name = "USER_REQUIREMENT",
             joinColumns = @JoinColumn(name = "idUser", referencedColumnName = "idUser"),
             inverseJoinColumns = @JoinColumn(name = "idRequirement", referencedColumnName = "idRequirement"))
     private List<Requirement> requirements;
+
+    public List<Requirement> getRequirements() {
+        return requirements;
+    }
+
+    public void setRequirements(List<Requirement> requirements) {
+        this.requirements = requirements;
+    }
 
 }
 

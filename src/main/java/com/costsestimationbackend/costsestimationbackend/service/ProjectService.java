@@ -2,6 +2,7 @@ package com.costsestimationbackend.costsestimationbackend.service;
 
 import com.costsestimationbackend.costsestimationbackend.model.Project.Project;
 import com.costsestimationbackend.costsestimationbackend.model.Project.ProjectDto;
+import com.costsestimationbackend.costsestimationbackend.model.Requirement.RequirementDto;
 
 import java.util.List;
 
@@ -17,4 +18,8 @@ public interface ProjectService {
 
     ProjectDto update(ProjectDto projectDto);
 
+    void addRequirementToProject(int idProject, int idRequirement);
+
+    //getting all requirements of specific project
+    List<RequirementDto> getProjectRequirements(int idProject);
 }
