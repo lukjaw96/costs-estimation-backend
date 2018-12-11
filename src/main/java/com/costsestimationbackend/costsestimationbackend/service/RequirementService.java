@@ -9,7 +9,7 @@ public interface RequirementService {
 
     Requirement save(RequirementDto requirement);
 
-    List<Requirement> findAll();
+    List<RequirementDto> findAll();
 
     void delete(int id);
 

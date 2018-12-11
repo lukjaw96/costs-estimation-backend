@@ -10,7 +10,7 @@ public interface ProjectService {
 
     Project save(ProjectDto project);
 
-    List<Project> findAll();
+    List<ProjectDto> findAll();
 
     void delete(int id);
 

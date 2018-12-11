@@ -32,15 +32,37 @@ public class ProjectServiceImpl implements ProjectService {
         return optionalProject.isPresent() ? optionalProject.get() : null;
     }
 
-    public List<Project> findAll() {
+    public List<ProjectDto> findAll() {
         List<Project> list = new ArrayList<>();
         projectRepository.findAll().iterator().forEachRemaining(list::add);
-        return list;
+
+        //Hibernate.initialize(project.getRequirements());
+
+        List<ProjectDto> listProjectsDto = new ArrayList<>();
+
+
+        for (Project pro : list) {
+            ProjectDto newProject = new ProjectDto();
+
+            newProject.setIdProject(pro.getIdProject());
+            newProject.setName(pro.getName());
+            newProject.setDescription(pro.getDescription());
+            newProject.setAuthor(pro.getAuthor());
+            newProject.setStatus(pro.getStatus());
+            newProject.setStartDate(pro.getStartDate());
+            newProject.setEndDate(pro.getEndDate());
+
+            listProjectsDto.add(newProject);
+        }
+
+
+        return listProjectsDto;
     }
 
     @Override
     public Project save(ProjectDto project) {
         Project newProject = new Project();
+        newProject.setIdProject(project.getIdProject());
         newProject.setName(project.getName());
         newProject.setDescription(project.getDescription());
         newProject.setAuthor(project.getAuthor());
@@ -81,12 +103,16 @@ public class ProjectServiceImpl implements ProjectService {
     @Transactional
     @Override
     public List<RequirementDto> getProjectRequirements(int idProject) {
+
         Optional<Project> optionalProject = projectRepository.findById(idProject);
         Project project = optionalProject.isPresent() ? optionalProject.get() : null;
+
         Hibernate.initialize(project.getRequirements());
+
         List<RequirementDto> listRequirements = new ArrayList<>();
         for (Requirement req : project.getRequirements()) {
             RequirementDto newRequirement = new RequirementDto();
+            newRequirement.setIdRequirement(req.getIdRequirement());
             newRequirement.setName(req.getName());
             newRequirement.setDescription(req.getDescription());
             newRequirement.setAuthor(req.getAuthor());

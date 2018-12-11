@@ -1,5 +1,7 @@
 package com.costsestimationbackend.costsestimationbackend.service.impl;
 
+import com.costsestimationbackend.costsestimationbackend.model.Project.Project;
+import com.costsestimationbackend.costsestimationbackend.model.Project.ProjectDto;
 import com.costsestimationbackend.costsestimationbackend.model.Requirement.Requirement;
 import com.costsestimationbackend.costsestimationbackend.model.Requirement.RequirementDto;
 import com.costsestimationbackend.costsestimationbackend.repository.RequirementRepository;
@@ -29,10 +31,39 @@ public class RequirementServiceImpl implements RequirementService {
         return optionalRequirement.isPresent() ? optionalRequirement.get() : null;
     }
 
-    public List<Requirement> findAll() {
+    public List<RequirementDto> findAll() {
+
+
         List<Requirement> list = new ArrayList<>();
         requirementRepository.findAll().iterator().forEachRemaining(list::add);
-        return list;
+
+        //Hibernate.initialize(project.getRequirements());
+
+        List<RequirementDto> listRequirementsDto = new ArrayList<>();
+
+
+        for (Requirement req : list) {
+            RequirementDto newRequirement = new RequirementDto();
+
+            newRequirement.setIdRequirement(req.getIdRequirement());
+            newRequirement.setName(req.getName());
+            newRequirement.setDescription(req.getDescription());
+            newRequirement.setAuthor(req.getAuthor());
+            newRequirement.setCreationDate(req.getCreationDate());
+            newRequirement.setFinalCost(req.getFinalCost());
+
+            listRequirementsDto.add(newRequirement);
+        }
+        return listRequirementsDto;
+
+
+
+
+
+
+//        List<Requirement> list = new ArrayList<>();
+//        requirementRepository.findAll().iterator().forEachRemaining(list::add);
+//        return list;
     }
 
     @Transactional
@@ -40,6 +71,7 @@ public class RequirementServiceImpl implements RequirementService {
     public Requirement save(RequirementDto requirement) {
         Requirement newRequirement = new Requirement();
 
+        newRequirement.setIdRequirement(requirement.getIdRequirement());
         newRequirement.setName(requirement.getName());
         newRequirement.setDescription(requirement.getDescription());
         newRequirement.setAuthor(requirement.getAuthor());
