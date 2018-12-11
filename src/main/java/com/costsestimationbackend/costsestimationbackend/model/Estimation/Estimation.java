@@ -25,7 +25,7 @@ public class Estimation {
     private int estimation;
 
 
-    public long getIdEstimation() {
+    public int getIdEstimation() {
         return idEstimation;
     }
 
