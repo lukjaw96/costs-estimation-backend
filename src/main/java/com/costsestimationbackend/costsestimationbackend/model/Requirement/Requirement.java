@@ -1,8 +1,10 @@
 package com.costsestimationbackend.costsestimationbackend.model.Requirement;
 
+import com.costsestimationbackend.costsestimationbackend.model.Estimation.Estimation;
 import com.costsestimationbackend.costsestimationbackend.model.Project.Project;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -86,6 +88,22 @@ public class Requirement {
 
     public void setProjects(List<Project> projects) {
         this.projects = projects;
+    }
+
+    @OneToMany(mappedBy = "requirement")
+    public List<Estimation> getEstimations() {
+        return estimations;
+    }
+
+    private List<Estimation> estimations = new ArrayList<Estimation>();
+
+
+    public void setEstimations(List<Estimation> estimations) {
+        this.estimations = estimations;
+    }
+
+    public void addEstimation(Estimation estimation) {
+        this.estimations.add(estimation);
     }
 }
 

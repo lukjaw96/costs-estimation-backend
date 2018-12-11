@@ -1,10 +1,14 @@
 package com.costsestimationbackend.costsestimationbackend.model.User;
 
+import com.costsestimationbackend.costsestimationbackend.model.Estimation.Estimation;
 import com.costsestimationbackend.costsestimationbackend.model.Requirement.Requirement;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 @Table(name = "USER")
@@ -94,5 +98,19 @@ public class User {
         this.requirements = requirements;
     }
 
+
+    @OneToMany(mappedBy = "user")
+    public List<Estimation> getEstimations() {
+        return estimations;
+    }
+    private List<Estimation> estimations = new ArrayList<Estimation>();
+
+    public void setEstimations(List<Estimation> estimations) {
+        this.estimations = estimations;
+    }
+
+    public void addEstimations(Estimation estimation) {
+        this.estimations.add(estimation);
+    }
 }
 
