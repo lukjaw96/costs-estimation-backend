@@ -14,11 +14,11 @@ public class Estimation {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int idEstimation;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne()
     @JoinColumn(name = "id_user")
     private User user;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne()
     @JoinColumn(name = "id_requirement")
     private Requirement requirement;
 
