@@ -87,4 +87,6 @@ public class ProjectDto {
         this.startDate = startDate;
         this.endDate = endDate;
     }
+
+    public ProjectDto() { }
 }

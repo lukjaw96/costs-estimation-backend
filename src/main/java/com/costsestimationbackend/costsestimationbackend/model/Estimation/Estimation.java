@@ -22,6 +22,7 @@ public class Estimation {
     @JoinColumn(name = "id_requirement")
     private Requirement requirement;
 
+    @Column
     private int estimation;
 
 

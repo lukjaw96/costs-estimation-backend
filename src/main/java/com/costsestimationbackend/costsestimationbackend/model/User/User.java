@@ -27,7 +27,7 @@ public class User {
     @Column(nullable = false, unique = true)
     private String username;
 
-    @Column(nullable = false)
+    //@Column(nullable = false)
 	@JsonIgnore
     //used to ignore sending password when getting all users
     private String password;
@@ -83,20 +83,20 @@ public class User {
         this.role = role;
     }
 
-    @ManyToMany(fetch = FetchType.LAZY)
-    @JoinTable(
-            name = "USER_REQUIREMENT",
-            joinColumns = @JoinColumn(name = "idUser", referencedColumnName = "idUser"),
-            inverseJoinColumns = @JoinColumn(name = "idRequirement", referencedColumnName = "idRequirement"))
-    private List<Requirement> requirements;
-
-    public List<Requirement> getRequirements() {
-        return requirements;
-    }
-
-    public void setRequirements(List<Requirement> requirements) {
-        this.requirements = requirements;
-    }
+//    @ManyToMany(fetch = FetchType.LAZY)
+//    @JoinTable(
+//            name = "USER_REQUIREMENT",
+//            joinColumns = @JoinColumn(name = "idUser", referencedColumnName = "idUser"),
+//            inverseJoinColumns = @JoinColumn(name = "idRequirement", referencedColumnName = "idRequirement"))
+//    private List<Requirement> requirements;
+//
+//    public List<Requirement> getRequirements() {
+//        return requirements;
+//    }
+//
+//    public void setRequirements(List<Requirement> requirements) {
+//        this.requirements = requirements;
+//    }
 
     @OneToMany(mappedBy = "user")
     private List<Estimation> estimations;

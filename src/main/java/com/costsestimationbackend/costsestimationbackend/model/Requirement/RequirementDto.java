@@ -75,4 +75,6 @@ public class RequirementDto {
         this.creationDate = creationDate;
         this.finalCost = finalCost;
     }
+
+    public RequirementDto() {};
 }

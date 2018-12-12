@@ -48,4 +48,6 @@ public class EstimationDto {
         this.idRequirement = idRequirement;
         this.estimation = estimation;
     }
+
+    public EstimationDto() {}
 }
