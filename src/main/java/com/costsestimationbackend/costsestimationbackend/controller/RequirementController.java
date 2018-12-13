@@ -1,6 +1,7 @@
 package com.costsestimationbackend.costsestimationbackend.controller;
 
 import com.costsestimationbackend.costsestimationbackend.model.ApiResponse;
+import com.costsestimationbackend.costsestimationbackend.model.Estimation.Estimation;
 import com.costsestimationbackend.costsestimationbackend.model.Project.Project;
 import com.costsestimationbackend.costsestimationbackend.model.Requirement.Requirement;
 import com.costsestimationbackend.costsestimationbackend.model.Requirement.RequirementDto;
@@ -43,5 +44,10 @@ public class RequirementController {
     public ApiResponse<Void> delete(@PathVariable int id) {
         requirementService.delete(id);
         return new ApiResponse<>(HttpStatus.OK.value(), "Requirement deleted successfully.", null);
+    }
+
+    @GetMapping(path = "/requirements/{idRequirement}/estimations")
+    public ApiResponse<List<Estimation>> getRequirementEstimations(@PathVariable int idRequirement) {
+        return new ApiResponse<>(HttpStatus.OK.value(), "Requirement estimations fetched successfully", requirementService.getRequirementEstimations(idRequirement));
     }
 }

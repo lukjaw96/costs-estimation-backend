@@ -14,7 +14,7 @@ public interface ProjectService {
 
     void delete(int id);
 
-    Project findById(int id);
+    ProjectDto findById(int id);
 
     ProjectDto update(ProjectDto projectDto);
 

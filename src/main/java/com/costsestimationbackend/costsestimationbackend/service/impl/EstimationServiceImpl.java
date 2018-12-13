@@ -70,8 +70,8 @@ public class EstimationServiceImpl implements EstimationService {
     public Estimation save(EstimationDto estimationDto) {
         Estimation estimation = new Estimation();
 
-        estimation.setIdEstimation(estimation.getIdEstimation());
-        estimation.setEstimation(estimation.getEstimation());
+        //estimation.setIdEstimation(estimationDto.getIdEstimation());
+        estimation.setEstimation(estimationDto.getEstimation());
 
         Optional<User> optionalUser = userRepository.findById(estimationDto.getIdUser());
         estimation.setUser(optionalUser.isPresent() ? optionalUser.get() : null);

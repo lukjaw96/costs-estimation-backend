@@ -1,5 +1,7 @@
 package com.costsestimationbackend.costsestimationbackend.service.impl;
 
+import com.costsestimationbackend.costsestimationbackend.model.Estimation.Estimation;
+import com.costsestimationbackend.costsestimationbackend.model.Estimation.EstimationDto;
 import com.costsestimationbackend.costsestimationbackend.model.Project.Project;
 import com.costsestimationbackend.costsestimationbackend.model.Project.ProjectDto;
 import com.costsestimationbackend.costsestimationbackend.model.Requirement.Requirement;
@@ -27,9 +29,24 @@ public class ProjectServiceImpl implements ProjectService {
     private RequirementRepository requirementRepository;
 
     @Override
-    public Project findById(int id) {
+    public ProjectDto findById(int id) {
+
         Optional<Project> optionalProject = projectRepository.findById(id);
-        return optionalProject.isPresent() ? optionalProject.get() : null;
+        Project newProject = optionalProject.isPresent() ? optionalProject.get() : null;
+        return new ProjectDto(
+                newProject.getIdProject(),
+                newProject.getName(),
+                newProject.getAuthor(),
+                newProject.getDescription(),
+                newProject.getStatus(),
+                newProject.getStartDate(),
+                newProject.getEndDate()
+                );
+
+
+
+//        Optional<Project> optionalProject = projectRepository.findById(id);
+//        return optionalProject.isPresent() ? optionalProject.get() : null;
     }
 
     public List<ProjectDto> findAll() {
@@ -74,7 +91,11 @@ public class ProjectServiceImpl implements ProjectService {
 
     @Override
     public ProjectDto update(ProjectDto projectDto) {
-        Project project = findById(projectDto.getIdProject());
+        //Project project = projectRepository.findById(projectDto.getIdProject());
+
+        Optional<Project> optionalProject = projectRepository.findById(projectDto.getIdProject());
+        Project project = optionalProject.isPresent() ? optionalProject.get() : null;
+
         if (project != null) {
             BeanUtils.copyProperties(projectDto, project, "idProject");
             projectRepository.save(project);

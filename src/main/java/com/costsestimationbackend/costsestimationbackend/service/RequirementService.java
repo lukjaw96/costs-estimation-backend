@@ -1,5 +1,6 @@
 package com.costsestimationbackend.costsestimationbackend.service;
 
+import com.costsestimationbackend.costsestimationbackend.model.Estimation.EstimationDto;
 import com.costsestimationbackend.costsestimationbackend.model.Requirement.Requirement;
 import com.costsestimationbackend.costsestimationbackend.model.Requirement.RequirementDto;
 
@@ -13,10 +14,12 @@ public interface RequirementService {
 
     void delete(int id);
 
-    Requirement findById(int id);
+    RequirementDto findById(int id);
 
     RequirementDto update(RequirementDto requirementDto);
 
     List<Requirement> findByIdProject();
+
+    List<EstimationDto> getRequirementEstimations(int idRequirement);
 
 }

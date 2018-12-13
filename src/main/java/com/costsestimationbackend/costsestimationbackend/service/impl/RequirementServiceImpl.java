@@ -1,10 +1,15 @@
 package com.costsestimationbackend.costsestimationbackend.service.impl;
 
+import com.costsestimationbackend.costsestimationbackend.model.Estimation.Estimation;
+import com.costsestimationbackend.costsestimationbackend.model.Estimation.EstimationDto;
+import com.costsestimationbackend.costsestimationbackend.model.Project.Project;
+import com.costsestimationbackend.costsestimationbackend.model.Project.ProjectDto;
 import com.costsestimationbackend.costsestimationbackend.model.Requirement.Requirement;
 import com.costsestimationbackend.costsestimationbackend.model.Requirement.RequirementDto;
 import com.costsestimationbackend.costsestimationbackend.repository.RequirementRepository;
 import com.costsestimationbackend.costsestimationbackend.repository.UserRepository;
 import com.costsestimationbackend.costsestimationbackend.service.RequirementService;
+import org.hibernate.Hibernate;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -24,9 +29,21 @@ public class RequirementServiceImpl implements RequirementService {
     private UserRepository userRepository;
 
     @Override
-    public Requirement findById(int id) {
+    public RequirementDto findById(int id) {
+
         Optional<Requirement> optionalRequirement = requirementRepository.findById(id);
-        return optionalRequirement.isPresent() ? optionalRequirement.get() : null;
+        Requirement newRequirement = optionalRequirement.isPresent() ? optionalRequirement.get() : null;
+        return new RequirementDto(
+                newRequirement.getIdRequirement(),
+                newRequirement.getName(),
+                newRequirement.getDescription(),
+                newRequirement.getAuthor(),
+                newRequirement.getCreationDate(),
+                newRequirement.getFinalCost()
+        );
+
+//        Optional<Requirement> optionalRequirement = requirementRepository.findById(id);
+//        return optionalRequirement.isPresent() ? optionalRequirement.get() : null;
     }
 
     public List<RequirementDto> findAll() {
@@ -64,7 +81,8 @@ public class RequirementServiceImpl implements RequirementService {
 
     @Override
     public RequirementDto update(RequirementDto requirementDto) {
-        Requirement requirement = findById(requirementDto.getIdRequirement());
+        Optional<Requirement> optionalRequirement = requirementRepository.findById(requirementDto.getIdRequirement());
+        Requirement requirement = optionalRequirement.isPresent() ? optionalRequirement.get() : null;
         if (requirement != null) {
             BeanUtils.copyProperties(requirementDto, requirement, "idRequirement");
             requirementRepository.save(requirement);
@@ -82,5 +100,28 @@ public class RequirementServiceImpl implements RequirementService {
         List<Requirement> list = new ArrayList<>();
         requirementRepository.findByProjects_IdProject(1).iterator().forEachRemaining(list::add);
         return list;
+    }
+
+    @Transactional
+    @Override
+    public List<EstimationDto> getRequirementEstimations(int idRequirement) {
+
+        Optional<Requirement> optionalRequirement = requirementRepository.findById(idRequirement);
+        Requirement requirement = optionalRequirement.isPresent() ? optionalRequirement.get() : null;
+
+        Hibernate.initialize(requirement.getEstimations());
+
+        List<EstimationDto> listEstimations = new ArrayList<>();
+        for (Estimation est : requirement.getEstimations()) {
+
+            EstimationDto newEstimation = new EstimationDto(
+                    est.getIdEstimation(),
+                    est.getUser().getIdUser(),
+                    est.getRequirement().getIdRequirement(),
+                    est.getEstimation()
+            );
+            listEstimations.add(newEstimation);
+        }
+        return listEstimations;
     }
 }
