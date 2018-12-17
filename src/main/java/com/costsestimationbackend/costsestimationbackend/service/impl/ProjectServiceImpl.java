@@ -9,6 +9,7 @@ import com.costsestimationbackend.costsestimationbackend.model.Requirement.Requi
 import com.costsestimationbackend.costsestimationbackend.repository.ProjectRepository;
 import com.costsestimationbackend.costsestimationbackend.repository.RequirementRepository;
 import com.costsestimationbackend.costsestimationbackend.service.ProjectService;
+import com.costsestimationbackend.costsestimationbackend.validator.TextValidator;
 import org.hibernate.Hibernate;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -41,8 +42,7 @@ public class ProjectServiceImpl implements ProjectService {
                 newProject.getStatus(),
                 newProject.getStartDate(),
                 newProject.getEndDate()
-                );
-
+        );
 
 
 //        Optional<Project> optionalProject = projectRepository.findById(id);
@@ -77,15 +77,24 @@ public class ProjectServiceImpl implements ProjectService {
 
     @Override
     public Project save(ProjectDto project) {
-        Project newProject = new Project();
-        newProject.setIdProject(project.getIdProject());
-        newProject.setName(project.getName());
-        newProject.setDescription(project.getDescription());
-        newProject.setAuthor(project.getAuthor());
-        newProject.setStatus(project.getStatus());
-        newProject.setStartDate(project.getStartDate());
-        newProject.setEndDate(project.getEndDate());
-        return projectRepository.save(newProject);
+        TextValidator textValidator = new TextValidator();
+        boolean valid = textValidator.validate(project.getName());
+
+        if (valid) {
+            if (projectRepository.findByName(project.getName()) == null) {
+                Project newProject = new Project();
+                newProject.setIdProject(project.getIdProject());
+                newProject.setName(project.getName());
+                newProject.setDescription(project.getDescription());
+                newProject.setAuthor(project.getAuthor());
+                newProject.setStatus(project.getStatus());
+                newProject.setStartDate(project.getStartDate());
+                newProject.setEndDate(project.getEndDate());
+                return projectRepository.save(newProject);
+            }
+        }
+        return null;
+
     }
 
 

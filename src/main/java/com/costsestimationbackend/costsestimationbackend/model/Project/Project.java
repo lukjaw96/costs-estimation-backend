@@ -3,6 +3,7 @@ package com.costsestimationbackend.costsestimationbackend.model.Project;
 import com.costsestimationbackend.costsestimationbackend.model.Requirement.Requirement;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.util.List;
 
 @Entity
@@ -14,6 +15,7 @@ public class Project {
     private int idProject;
 
     @Column
+    @NotNull
     private String name;
 
     @Column

@@ -18,6 +18,8 @@ import javax.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 @Service(value = "requirementService")
 public class RequirementServiceImpl implements RequirementService {
@@ -41,9 +43,6 @@ public class RequirementServiceImpl implements RequirementService {
                 newRequirement.getCreationDate(),
                 newRequirement.getFinalCost()
         );
-
-//        Optional<Requirement> optionalRequirement = requirementRepository.findById(id);
-//        return optionalRequirement.isPresent() ? optionalRequirement.get() : null;
     }
 
     public List<RequirementDto> findAll() {
@@ -67,27 +66,78 @@ public class RequirementServiceImpl implements RequirementService {
     @Transactional
     @Override
     public Requirement save(RequirementDto requirement) {
-        Requirement newRequirement = new Requirement();
+        if(requirement.getName() != null){
 
-        newRequirement.setIdRequirement(requirement.getIdRequirement());
-        newRequirement.setName(requirement.getName());
-        newRequirement.setDescription(requirement.getDescription());
-        newRequirement.setAuthor(requirement.getAuthor());
-        newRequirement.setCreationDate(requirement.getCreationDate());
-        newRequirement.setFinalCost(requirement.getFinalCost());
+        Pattern patternName = Pattern.compile("\\s");
+        Matcher matcherName = patternName.matcher(requirement.getName());
+        boolean foundSpacesInName = matcherName.find();
 
-        return requirementRepository.save(newRequirement);
+        boolean foundExistingRequirementInRepository = false;
+
+        if (requirementRepository.findByName(requirement.getName()) != null) {
+            foundExistingRequirementInRepository = true;
+        }
+
+        if (
+                !(
+                        requirement.getName() == "" ||
+                                foundSpacesInName ||
+                                foundExistingRequirementInRepository)
+
+        ) {
+            Requirement newRequirement = new Requirement();
+
+            newRequirement.setIdRequirement(requirement.getIdRequirement());
+            newRequirement.setName(requirement.getName());
+            newRequirement.setDescription(requirement.getDescription());
+            newRequirement.setAuthor(requirement.getAuthor());
+            newRequirement.setCreationDate(requirement.getCreationDate());
+            newRequirement.setFinalCost(requirement.getFinalCost());
+
+            return requirementRepository.save(newRequirement);
+        }
+
+
+
+    }
+        return null;
     }
 
     @Override
     public RequirementDto update(RequirementDto requirementDto) {
-        Optional<Requirement> optionalRequirement = requirementRepository.findById(requirementDto.getIdRequirement());
-        Requirement requirement = optionalRequirement.isPresent() ? optionalRequirement.get() : null;
-        if (requirement != null) {
-            BeanUtils.copyProperties(requirementDto, requirement, "idRequirement");
-            requirementRepository.save(requirement);
+        if(requirementDto.getName() != null){
+            Pattern patternName = Pattern.compile("\\s");
+            Matcher matcherName = patternName.matcher(requirementDto.getName());
+            boolean foundSpacesInName = matcherName.find();
+
+            boolean foundExistingRequirementInRepository = false;
+
+            if (requirementRepository.findByName(requirementDto.getName()) != null) {
+                foundExistingRequirementInRepository = true;
+            }
+
+            if (
+                    !(requirementDto.getName() == null ||
+                            requirementDto.getName() == "" ||
+                            foundSpacesInName ||
+                            foundExistingRequirementInRepository)
+
+            ) {
+                Optional<Requirement> optionalRequirement = requirementRepository.findById(requirementDto.getIdRequirement());
+                Requirement requirement = optionalRequirement.isPresent() ? optionalRequirement.get() : null;
+                if (requirement != null) {
+                    BeanUtils.copyProperties(requirementDto, requirement, "idRequirement");
+                    requirementRepository.save(requirement);
+                }
+                return requirementDto;
+            }
         }
-        return requirementDto;
+
+
+        return null;
+
+
+
     }
 
     @Override

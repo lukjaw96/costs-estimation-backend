@@ -1,11 +1,13 @@
 package com.costsestimationbackend.costsestimationbackend.service.impl;
 
+import com.costsestimationbackend.costsestimationbackend.model.Project.Project;
+import com.costsestimationbackend.costsestimationbackend.model.Project.ProjectDto;
 import com.costsestimationbackend.costsestimationbackend.model.User.User;
 import com.costsestimationbackend.costsestimationbackend.model.User.UserDto;
 import com.costsestimationbackend.costsestimationbackend.model.User.UserPasswordUpdate;
 import com.costsestimationbackend.costsestimationbackend.repository.UserRepository;
 import com.costsestimationbackend.costsestimationbackend.service.UserService;
-
+import com.costsestimationbackend.costsestimationbackend.validator.TextValidator;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
@@ -17,10 +19,13 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 @Service(value = "userService")
 public class UserServiceImpl implements UserDetailsService, UserService {
@@ -44,19 +49,63 @@ public class UserServiceImpl implements UserDetailsService, UserService {
         return Arrays.asList(new SimpleGrantedAuthority("ROLE_" + role));
     }
 
-    public List<User> findAll() {
-        List<User> list = new ArrayList<>();
-        userRepository.findAll().iterator().forEachRemaining(list::add);
-        return list;
+    @Override
+    public List<UserDto> findAll() {
+        List<User> usersList = new ArrayList<>();
+        userRepository.findAll().iterator().forEachRemaining(usersList::add);
+        List<UserDto> usersDtoList = new ArrayList<>();
+
+        for (User user : usersList) {
+            UserDto userDto = new UserDto();
+            BeanUtils.copyProperties(user, userDto, "password", "estimations");
+            usersDtoList.add(userDto);
+        }
+
+        return usersDtoList;
     }
 
-    public void updatePassword(UserPasswordUpdate userPasswordUpdate) {
-        User user = findById(userPasswordUpdate.getIdUser());
-        userPasswordUpdate.setPassword(bcryptEncoder.encode(userPasswordUpdate.getPassword()));
+    @Override
+    public UserDto findById(int id) {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        String username = auth.getName();
+        int idUser = userRepository.findByUsername(username).getIdUser();
 
-        if (user != null) {
-            BeanUtils.copyProperties(userPasswordUpdate, user, "idUser", "oldPassword");
-            userRepository.save(user);
+        if (id == idUser) {
+
+            Optional<User> optionalUser = userRepository.findById(id);
+            User user = optionalUser.isPresent() ? optionalUser.get() : null;
+
+            UserDto userDto = new UserDto();
+            BeanUtils.copyProperties(user, userDto, "password", "estimations");
+
+            return userDto;
+        } else {
+            return null;
+        }
+    }
+
+
+
+    public void updatePassword(UserPasswordUpdate userPasswordUpdate) {
+        Optional<User> optionalUser = userRepository.findById(userPasswordUpdate.getIdUser());
+        User user = optionalUser.isPresent() ? optionalUser.get() : null;
+
+        Pattern patternPassword = Pattern.compile("\\s");
+        Matcher matcherPassword = patternPassword.matcher(userPasswordUpdate.getPassword());
+        boolean foundSpacesInPassword = matcherPassword.find();
+
+        if (
+                !(user.getPassword() == null ||
+                        user.getPassword() == "" ||
+                        foundSpacesInPassword ||
+                        user.getPassword().length() < 8)
+        ) {
+            userPasswordUpdate.setPassword(bcryptEncoder.encode(userPasswordUpdate.getPassword()));
+
+            if (user != null) {
+                BeanUtils.copyProperties(userPasswordUpdate, user, "idUser", "oldPassword");
+                userRepository.save(user);
+            }
         }
     }
 
@@ -76,11 +125,6 @@ public class UserServiceImpl implements UserDetailsService, UserService {
         return userRepository.findByUsername(username);
     }
 
-    @Override
-    public User findById(int id) {
-        Optional<User> optionalUser = userRepository.findById(id);
-        return optionalUser.isPresent() ? optionalUser.get() : null;
-    }
 
     @Override
     public User findByUsername(String username) {
@@ -108,7 +152,9 @@ public class UserServiceImpl implements UserDetailsService, UserService {
 
     @Override
     public UserDto update(UserDto userDto) {
-        User user = findById(userDto.getIdUser());
+        Optional<User> optionalUser = userRepository.findById(userDto.getIdUser());
+        User user = optionalUser.isPresent() ? optionalUser.get() : null;
+
         if (user != null) {
             BeanUtils.copyProperties(userDto, user, "password", "idUser", "username");
             userRepository.save(user);
@@ -118,12 +164,42 @@ public class UserServiceImpl implements UserDetailsService, UserService {
 
     @Override
     public User save(UserDto user) {
-        User newUser = new User();
-        newUser.setFirstName(user.getFirstName());
-        newUser.setLastName(user.getLastName());
-        newUser.setUsername(user.getUsername());
-        newUser.setPassword(bcryptEncoder.encode(user.getPassword()));
-        newUser.setRole(user.getRole());
-        return userRepository.save(newUser);
+        if ((user.getUsername() != null) && (user.getPassword() != null)) {
+            Pattern patternUsername = Pattern.compile("\\s");
+            Matcher matcherUsername = patternUsername.matcher(user.getUsername());
+            boolean foundSpacesInUser = matcherUsername.find();
+
+            Pattern patternPassword = Pattern.compile("\\s");
+            Matcher matcherPassword = patternPassword.matcher(user.getPassword());
+            boolean foundSpacesInPassword = matcherPassword.find();
+
+            boolean foundExistingUserInRepository = false;
+
+            if (userRepository.findByUsername(user.getUsername()) != null) {
+                foundExistingUserInRepository = true;
+            }
+
+            if (
+                    !(user.getPassword() == null ||
+                            user.getPassword() == "" ||
+                            foundSpacesInPassword ||
+                            user.getPassword().length() < 8 ||
+                            user.getUsername() == null ||
+                            user.getUsername() == "" ||
+                            foundSpacesInUser ||
+
+                            foundExistingUserInRepository)
+
+            ) {
+                User newUser = new User();
+                newUser.setFirstName(user.getFirstName());
+                newUser.setLastName(user.getLastName());
+                newUser.setUsername(user.getUsername());
+                newUser.setPassword(bcryptEncoder.encode(user.getPassword()));
+                newUser.setRole(user.getRole());
+                return userRepository.save(newUser);
+            }
+        }
+        return null;
     }
 }

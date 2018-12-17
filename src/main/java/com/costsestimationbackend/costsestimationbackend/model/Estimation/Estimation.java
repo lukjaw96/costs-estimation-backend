@@ -4,6 +4,9 @@ import com.costsestimationbackend.costsestimationbackend.model.Requirement.Requi
 import com.costsestimationbackend.costsestimationbackend.model.User.User;
 
 import javax.persistence.*;
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotNull;
 
 @Entity
 @Table(name = "ESTIMATION")
@@ -23,6 +26,9 @@ public class Estimation {
     private Requirement requirement;
 
     @Column
+    @NotNull
+    @Min(1)
+    @Max(100)
     private int estimation;
 
 

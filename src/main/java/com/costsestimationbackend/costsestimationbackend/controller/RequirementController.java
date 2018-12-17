@@ -9,6 +9,7 @@ import com.costsestimationbackend.costsestimationbackend.model.User.UserDto;
 import com.costsestimationbackend.costsestimationbackend.service.RequirementService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -30,16 +31,19 @@ public class RequirementController {
         return new ApiResponse<>(HttpStatus.OK.value(), "Requirement fetched successfully.",requirementService.findById(id));
     }
 
+    @PreAuthorize("hasRole('ANALYST')")
     @PostMapping(path = "/requirements/add")
     public ApiResponse<Project> createProject(@RequestBody RequirementDto project) {
         return new ApiResponse<>(HttpStatus.OK.value(), "Requirement saved successfully.",requirementService.save(project));
     }
 
+    @PreAuthorize("hasRole('ANALYST')")
     @PutMapping(path = "/requirements/{id}")
     public ApiResponse<UserDto> update(@RequestBody RequirementDto requirementDto) {
         return new ApiResponse<>(HttpStatus.OK.value(), "Requirement updated successfully.", requirementService.update(requirementDto));
     }
 
+    @PreAuthorize("hasRole('ANALYST')")
     @DeleteMapping("/requirements/{id}")
     public ApiResponse<Void> delete(@PathVariable int id) {
         requirementService.delete(id);
