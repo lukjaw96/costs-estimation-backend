@@ -28,7 +28,7 @@ public class Estimation {
     @Column
     @NotNull
     @Min(1)
-    @Max(100)
+    @Max(12)
     private int estimation;
 
 

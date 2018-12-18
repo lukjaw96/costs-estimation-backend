@@ -46,4 +46,9 @@ public class EstimationController {
         estimationService.delete(id);
         return new ApiResponse<>(HttpStatus.OK.value(), "Estimation deleted successfully.", null);
     }
+
+    @GetMapping("/estimations/ranges")
+    public ApiResponse<?> getEstimationsRanges() {
+        return new ApiResponse<>(HttpStatus.OK.value(), "Estimation fetched successfully.", estimationService.getEstimationsRanges());
+    }
 }

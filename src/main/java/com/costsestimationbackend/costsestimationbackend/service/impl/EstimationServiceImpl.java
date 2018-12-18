@@ -103,4 +103,9 @@ public class EstimationServiceImpl implements EstimationService {
         estimationRepository.deleteById(id);
     }
 
+    @Override
+    public List<?> getEstimationsRanges() {
+        return estimationRepository.getEstimationsRanges();
+    }
+
 }

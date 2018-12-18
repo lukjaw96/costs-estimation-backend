@@ -13,4 +13,6 @@ public interface EstimationService {
     List<EstimationDto> findAll();
     void delete(int id);
     EstimationDto update(EstimationDto estimationDto);
+
+    List<?> getEstimationsRanges();
 }
