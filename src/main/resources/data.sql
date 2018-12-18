@@ -9,3 +9,13 @@ INSERT INTO user(id_user, first_name, last_name, password, role, username) VALUE
 INSERT INTO project(id_project, author, description, end_date, name, start_date, status) VALUES(1, 'authorfirst', 'cool project', null, 'First Project', 'grudzien', 'open');
 INSERT INTO requirement(id_requirement, author, name) VALUES ('1', 'authorfirst', 'first requirement');
 
+
+INSERT INTO `estimation_database`.`estimation` (`id_estimation`, `estimation`, `id_requirement`, `id_user`) VALUES ('1', '1', '1', '4');
+INSERT INTO `estimation_database`.`estimation` (`id_estimation`, `estimation`, `id_requirement`, `id_user`) VALUES ('2', '2', '2', '4');
+INSERT INTO `estimation_database`.`estimation` (`id_estimation`, `estimation`, `id_requirement`, `id_user`) VALUES ('3', '3', '3', '4');
+INSERT INTO `estimation_database`.`estimation` (`id_estimation`, `estimation`, `id_requirement`, `id_user`) VALUES ('4', '4', '4', '4');
+INSERT INTO `estimation_database`.`estimation` (`id_estimation`, `estimation`, `id_requirement`, `id_user`) VALUES ('5', '3', '1', '5');
+INSERT INTO `estimation_database`.`estimation` (`id_estimation`, `estimation`, `id_requirement`, `id_user`) VALUES ('6', '3', '2', '5');
+INSERT INTO `estimation_database`.`estimation` (`id_estimation`, `estimation`, `id_requirement`, `id_user`) VALUES ('7', '3', '3', '5');
+INSERT INTO `estimation_database`.`estimation` (`id_estimation`, `estimation`, `id_requirement`, `id_user`) VALUES ('8', '3', '4', '5');
+

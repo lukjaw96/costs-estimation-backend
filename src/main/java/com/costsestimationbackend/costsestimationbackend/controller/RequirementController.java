@@ -54,4 +54,9 @@ public class RequirementController {
     public ApiResponse<List<Estimation>> getRequirementEstimations(@PathVariable int idRequirement) {
         return new ApiResponse<>(HttpStatus.OK.value(), "Requirement estimations fetched successfully", requirementService.getRequirementEstimations(idRequirement));
     }
+
+    @GetMapping("/requirements/params")
+    public ApiResponse<?> getRequirementsParams(){
+        return new ApiResponse<>(HttpStatus.OK.value(), "Requirement fetched successfully.",requirementService.getRequirementsParams());
+    }
 }

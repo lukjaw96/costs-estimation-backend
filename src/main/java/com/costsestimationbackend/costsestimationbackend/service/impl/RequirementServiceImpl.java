@@ -2,8 +2,6 @@ package com.costsestimationbackend.costsestimationbackend.service.impl;
 
 import com.costsestimationbackend.costsestimationbackend.model.Estimation.Estimation;
 import com.costsestimationbackend.costsestimationbackend.model.Estimation.EstimationDto;
-import com.costsestimationbackend.costsestimationbackend.model.Project.Project;
-import com.costsestimationbackend.costsestimationbackend.model.Project.ProjectDto;
 import com.costsestimationbackend.costsestimationbackend.model.Requirement.Requirement;
 import com.costsestimationbackend.costsestimationbackend.model.Requirement.RequirementDto;
 import com.costsestimationbackend.costsestimationbackend.repository.RequirementRepository;
@@ -173,5 +171,10 @@ public class RequirementServiceImpl implements RequirementService {
             listEstimations.add(newEstimation);
         }
         return listEstimations;
+    }
+
+    @Override
+    public List<?> getRequirementsParams() {
+        return requirementRepository.getRequirementsParams();
     }
 }

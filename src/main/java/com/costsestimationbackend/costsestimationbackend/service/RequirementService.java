@@ -22,4 +22,5 @@ public interface RequirementService {
 
     List<EstimationDto> getRequirementEstimations(int idRequirement);
 
+    List<?> getRequirementsParams();
 }
