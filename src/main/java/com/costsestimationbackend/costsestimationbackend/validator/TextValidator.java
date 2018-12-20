@@ -10,7 +10,7 @@ public class TextValidator {
     private Pattern pattern;
     private Matcher matcher;
 
-    private static final String TEXT_PATTERN = "^[a-z0-9_-]{3,7}$";
+    private static final String TEXT_PATTERN = "^[a-z0-9_-]{1,50}$";
 
     public TextValidator(){
         pattern = Pattern.compile(TEXT_PATTERN);
