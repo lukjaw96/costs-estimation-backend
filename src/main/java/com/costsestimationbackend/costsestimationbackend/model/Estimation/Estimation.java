@@ -29,7 +29,7 @@ public class Estimation {
     @NotNull
     @Min(1)
     @Max(12)
-    private int estimation;
+    private Integer estimation;
 
 
     public int getIdEstimation() {
@@ -61,11 +61,11 @@ public class Estimation {
     }
 
 
-    public int getEstimation() {
+    public Integer getEstimation() {
         return estimation;
     }
 
-    public void setEstimation(int estimation) {
+    public void setEstimation(Integer estimation) {
         this.estimation = estimation;
     }
 }

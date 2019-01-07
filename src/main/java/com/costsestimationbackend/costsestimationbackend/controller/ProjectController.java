@@ -10,12 +10,14 @@ import com.costsestimationbackend.costsestimationbackend.repository.ProjectRepos
 import com.costsestimationbackend.costsestimationbackend.service.ProjectService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @CrossOrigin(origins = "*", maxAge = 3600)
 @RestController
+@RequestMapping("/projects")
 public class ProjectController {
 
     @Autowired
@@ -24,41 +26,45 @@ public class ProjectController {
     @Autowired
     private ProjectRepository projectRepository;
 
-    @GetMapping(path = "/projects")
+    @GetMapping()
     public ApiResponse<List<Project>> getAllProjects() {
         return new ApiResponse<>(HttpStatus.OK.value(), "Projects list fetched successfully.", projectService.findAll());
     }
 
-    @GetMapping("/projects/{id}")
+    @GetMapping("/{id}")
     public ApiResponse<User> getOne(@PathVariable int id) {
         return new ApiResponse<>(HttpStatus.OK.value(), "Project fetched successfully.", projectService.findById(id));
     }
 
-    @PostMapping(path = "/projects/add")
+    @PreAuthorize("hasRole('PROJECT_MANAGER')")
+    @PostMapping(path = "/add")
     public ApiResponse<Project> createProject(@RequestBody ProjectDto project) {
         return new ApiResponse<>(HttpStatus.OK.value(), "Project saved successfully.", projectService.save(project));
     }
 
-    @PutMapping(path = "/projects/{id}")
+    @PreAuthorize("hasRole('PROJECT_MANAGER')")
+    @PutMapping(path = "/{id}")
     public ApiResponse<UserDto> update(@RequestBody ProjectDto projectDto) {
         return new ApiResponse<>(HttpStatus.OK.value(), "Project updated successfully.", projectService.update(projectDto));
     }
 
-    @DeleteMapping("/projects/{id}")
+    @PreAuthorize("hasRole('PROJECT_MANAGER')")
+    @DeleteMapping("/{id}")
     public ApiResponse<Void> delete(@PathVariable int id) {
         projectService.delete(id);
         return new ApiResponse<>(HttpStatus.OK.value(), "Project deleted successfully.", null);
     }
 
+    @PreAuthorize("hasRole('ANALYST')")
     //adding requirement to specific project
-    @PostMapping(path = "/projects/{idProject}/requirements/add/{idRequirement}")
+    @PostMapping(path = "/{idProject}/requirements/add/{idRequirement}")
     public ApiResponse<Void> addRequirementToProject(@PathVariable int idProject, @PathVariable int idRequirement) {
         projectService.addRequirementToProject(idProject, idRequirement);
         return new ApiResponse<>(HttpStatus.OK.value(), "Requirements added successfully to project.", null);
     }
 
     //getting requirement of specific project
-    @GetMapping(path = "/projects/{idProject}/requirements")
+    @GetMapping(path = "/{idProject}/requirements")
     public ApiResponse<List<Requirement>> getProjectRequirements(@PathVariable int idProject) {
         return new ApiResponse<>(HttpStatus.OK.value(), "Project requirements fetched successfully", projectService.getProjectRequirements(idProject));
     }

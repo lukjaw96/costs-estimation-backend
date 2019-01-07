@@ -16,38 +16,39 @@ import java.util.List;
 
 @CrossOrigin(origins = "*", maxAge = 3600)
 @RestController
+@RequestMapping("/estimations")
 public class EstimationController {
 
     @Autowired
     EstimationService estimationService;
 
-    @GetMapping(path = "/estimations")
+    @GetMapping()
     public ApiResponse<List<Estimation>> getAllEstimations() {
         return new ApiResponse<>(HttpStatus.OK.value(), "Estimations list fetched successfully.", estimationService.findAll());
     }
 
-    @GetMapping("/estimations/{id}")
+    @GetMapping("/{id}")
     public ApiResponse<EstimationDto> getOne(@PathVariable int id) {
         return new ApiResponse<>(HttpStatus.OK.value(), "Estimation fetched successfully.", estimationService.findById(id));
     }
 
-    @PostMapping(path = "/estimations/add")
+    @PostMapping(path = "/add")
     public ApiResponse<Estimation> createEstimation(@RequestBody EstimationDto estimationDto) {
         return new ApiResponse<>(HttpStatus.OK.value(), "Estimation saved successfully.", estimationService.save(estimationDto));
     }
 
-    @PutMapping(path = "/estimations/{id}")
+    @PutMapping(path = "/{id}")
     public ApiResponse<EstimationDto> update(@RequestBody EstimationDto estimationDto) {
         return new ApiResponse<>(HttpStatus.OK.value(), "Estimation updated successfully.", estimationService.update(estimationDto));
     }
 
-    @DeleteMapping("/estimations/{id}")
+    @DeleteMapping("/{id}")
     public ApiResponse<Void> delete(@PathVariable int id) {
         estimationService.delete(id);
         return new ApiResponse<>(HttpStatus.OK.value(), "Estimation deleted successfully.", null);
     }
 
-    @GetMapping("/estimations/ranges")
+    @GetMapping("/ranges")
     public ApiResponse<?> getEstimationsRanges() {
         return new ApiResponse<>(HttpStatus.OK.value(), "Estimation fetched successfully.", estimationService.getEstimationsRanges());
     }

@@ -15,49 +15,48 @@ import java.util.List;
 
 @CrossOrigin(origins = "*", maxAge = 3600)
 @RestController
+@RequestMapping("/users")
 public class UserController {
 
     @Autowired
     private UserService userService;
 
     @PreAuthorize("hasRole('ADMIN')")
-    @GetMapping(path = "/users")
+    @GetMapping()
     public ApiResponse<List<User>> getAllUsers(){
         return new ApiResponse<>(HttpStatus.OK.value(), "User list fetched successfully.", userService.findAll());
     }
 
-    //@PreAuthorize("hasRole('ADMIN')")
-    @GetMapping("/users/{id}")
+    @GetMapping("/{id}")
     public ApiResponse<User> getOne(@PathVariable int id){
         return new ApiResponse<>(HttpStatus.OK.value(), "User fetched successfully.",userService.findById(id));
     }
 
     @PreAuthorize("hasRole('ADMIN')")
-    @PostMapping(path = "/users/add")
+    @PostMapping(path = "/add")
     public ApiResponse<User> createUser(@RequestBody UserDto user) {
         return new ApiResponse<>(HttpStatus.OK.value(), "User saved successfully.",userService.save(user));
     }
 
     @PreAuthorize("hasRole('ADMIN')")
-    @PutMapping(path = "/users/{id}")
+    @PutMapping(path = "/{id}")
     public ApiResponse<UserDto> update(@RequestBody UserDto userDto) {
         return new ApiResponse<>(HttpStatus.OK.value(), "User updated successfully.", userService.update(userDto));
     }
 
-
-    @PutMapping(path = "/users/{id}/password-update")
+    @PutMapping(path = "/{id}/password-update")
     public ApiResponse<Void> updatePassword(@RequestBody UserPasswordUpdate userPasswordUpdate) {
         userService.updatePassword(userPasswordUpdate);
         return new ApiResponse<>(HttpStatus.OK.value(), "User password updated successfully.", null);
     }
 
-    @PutMapping(path = "/users/{id}/update-self")
+    @PutMapping(path = "/{id}/update-self")
     public ApiResponse<Void> updateSelf(@RequestBody UserDto userDto) {
         return new ApiResponse<>(HttpStatus.OK.value(), "User updated successfully.", userService.updateSelf(userDto));
     }
 
     @PreAuthorize("hasRole('ADMIN')")
-    @DeleteMapping("/users/{id}")
+    @DeleteMapping("/{id}")
     public ApiResponse<Void> delete(@PathVariable int id) {
         userService.delete(id);
         return new ApiResponse<>(HttpStatus.OK.value(), "User deleted successfully.", null);

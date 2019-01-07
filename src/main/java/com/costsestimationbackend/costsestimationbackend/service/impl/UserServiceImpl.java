@@ -89,22 +89,23 @@ public class UserServiceImpl implements UserDetailsService, UserService {
     public void updatePassword(UserPasswordUpdate userPasswordUpdate) {
         Optional<User> optionalUser = userRepository.findById(userPasswordUpdate.getIdUser());
         User user = optionalUser.isPresent() ? optionalUser.get() : null;
+        if(userPasswordUpdate.getPassword() != null) {
+            Pattern patternPassword = Pattern.compile("\\s");
+            Matcher matcherPassword = patternPassword.matcher(userPasswordUpdate.getPassword());
+            boolean foundSpacesInPassword = matcherPassword.find();
 
-        Pattern patternPassword = Pattern.compile("\\s");
-        Matcher matcherPassword = patternPassword.matcher(userPasswordUpdate.getPassword());
-        boolean foundSpacesInPassword = matcherPassword.find();
+            if (
+                    !(user.getPassword() == null ||
+                            user.getPassword() == "" ||
+                            foundSpacesInPassword ||
+                            user.getPassword().length() < 8)
+            ) {
+                userPasswordUpdate.setPassword(bcryptEncoder.encode(userPasswordUpdate.getPassword()));
 
-        if (
-                !(user.getPassword() == null ||
-                        user.getPassword() == "" ||
-                        foundSpacesInPassword ||
-                        user.getPassword().length() < 8)
-        ) {
-            userPasswordUpdate.setPassword(bcryptEncoder.encode(userPasswordUpdate.getPassword()));
-
-            if (user != null) {
-                BeanUtils.copyProperties(userPasswordUpdate, user, "idUser", "oldPassword");
-                userRepository.save(user);
+                if (user != null) {
+                    BeanUtils.copyProperties(userPasswordUpdate, user, "idUser", "oldPassword");
+                    userRepository.save(user);
+                }
             }
         }
     }

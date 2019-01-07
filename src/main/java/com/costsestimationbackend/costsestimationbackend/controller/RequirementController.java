@@ -16,46 +16,48 @@ import java.util.List;
 
 @CrossOrigin(origins = "*", maxAge = 3600)
 @RestController
+@RequestMapping("/requirements")
 public class RequirementController {
     @Autowired
     private RequirementService requirementService;
 
-    @GetMapping(path = "/requirements")
+    @GetMapping()
     public ApiResponse<List<Requirement>> getAllRequirements(){
         return new ApiResponse<>(HttpStatus.OK.value(), "Requirements list fetched successfully.", requirementService.findAll());
-//        return new ApiResponse<>(HttpStatus.OK.value(), "Requirements list fetched successfully.", requirementService.findByIdProject());
     }
 
-    @GetMapping("/requirements/{id}")
+    @GetMapping("/{id}")
     public ApiResponse<Requirement> getOne(@PathVariable int id){
         return new ApiResponse<>(HttpStatus.OK.value(), "Requirement fetched successfully.",requirementService.findById(id));
     }
 
     @PreAuthorize("hasRole('ANALYST')")
-    @PostMapping(path = "/requirements/add")
+    @PostMapping(path = "/add")
     public ApiResponse<Project> createProject(@RequestBody RequirementDto project) {
         return new ApiResponse<>(HttpStatus.OK.value(), "Requirement saved successfully.",requirementService.save(project));
     }
 
     @PreAuthorize("hasRole('ANALYST')")
-    @PutMapping(path = "/requirements/{id}")
+    @PutMapping(path = "/{id}")
     public ApiResponse<UserDto> update(@RequestBody RequirementDto requirementDto) {
         return new ApiResponse<>(HttpStatus.OK.value(), "Requirement updated successfully.", requirementService.update(requirementDto));
     }
 
     @PreAuthorize("hasRole('ANALYST')")
-    @DeleteMapping("/requirements/{id}")
+    @DeleteMapping("/{id}")
     public ApiResponse<Void> delete(@PathVariable int id) {
         requirementService.delete(id);
         return new ApiResponse<>(HttpStatus.OK.value(), "Requirement deleted successfully.", null);
     }
 
-    @GetMapping(path = "/requirements/{idRequirement}/estimations")
+    @PreAuthorize("hasRole('PROJECT_MANAGER')")
+    @GetMapping(path = "/{idRequirement}/estimations")
     public ApiResponse<List<Estimation>> getRequirementEstimations(@PathVariable int idRequirement) {
         return new ApiResponse<>(HttpStatus.OK.value(), "Requirement estimations fetched successfully", requirementService.getRequirementEstimations(idRequirement));
     }
 
-    @GetMapping("/requirements/params")
+    @PreAuthorize("hasRole('PROJECT_MANAGER')")
+    @GetMapping("/params")
     public ApiResponse<?> getRequirementsParams(){
         return new ApiResponse<>(HttpStatus.OK.value(), "Requirement fetched successfully.",requirementService.getRequirementsParams());
     }

@@ -19,14 +19,13 @@ public class SwaggerConfig extends WebMvcConfigurationSupport {
         return new Docket(DocumentationType.SWAGGER_2)
                 .select()
                 .apis(RequestHandlerSelectors.basePackage("com.costsestimationbackend.costsestimationbackend"))
-//                .paths(regex("/token.*"))
                 .build()
                 .apiInfo(metaData());
     }
     private ApiInfo metaData() {
         return new ApiInfoBuilder()
                 .title("Spring Boot REST API")
-                .description("\"Spring Boot REST API for Online Store\"")
+                .description("\"Spring Boot REST API for requirements costs estimation\"")
                 .version("1.0.0")
                 .build();
     }

@@ -77,24 +77,25 @@ public class ProjectServiceImpl implements ProjectService {
 
     @Override
     public Project save(ProjectDto project) {
-        TextValidator textValidator = new TextValidator();
-        boolean valid = textValidator.validate(project.getName());
+        if(project.getName() != null){
+            TextValidator textValidator = new TextValidator();
+            boolean valid = textValidator.validate(project.getName());
 
-        if (valid) {
-            if (projectRepository.findByName(project.getName()) == null) {
-                Project newProject = new Project();
-                newProject.setIdProject(project.getIdProject());
-                newProject.setName(project.getName());
-                newProject.setDescription(project.getDescription());
-                newProject.setAuthor(project.getAuthor());
-                newProject.setStatus(project.getStatus());
-                newProject.setStartDate(project.getStartDate());
-                newProject.setEndDate(project.getEndDate());
-                return projectRepository.save(newProject);
+            if (valid) {
+                if (projectRepository.findByName(project.getName()) == null) {
+                    Project newProject = new Project();
+                    newProject.setIdProject(project.getIdProject());
+                    newProject.setName(project.getName());
+                    newProject.setDescription(project.getDescription());
+                    newProject.setAuthor(project.getAuthor());
+                    newProject.setStatus(project.getStatus());
+                    newProject.setStartDate(project.getStartDate());
+                    newProject.setEndDate(project.getEndDate());
+                    return projectRepository.save(newProject);
+                }
             }
         }
         return null;
-
     }
 
 

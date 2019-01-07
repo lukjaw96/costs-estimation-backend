@@ -5,7 +5,7 @@ public class EstimationDto {
     private int idEstimation;
     private int idUser;
     private int idRequirement;
-    private int estimation;
+    private Integer estimation;
 
     public int getIdEstimation() {
         return idEstimation;
@@ -31,18 +31,18 @@ public class EstimationDto {
         this.idRequirement = idRequirement;
     }
 
-    public int getEstimation() {
+    public Integer getEstimation() {
         return estimation;
     }
 
-    public void setEstimation(int estimation) {
+    public void setEstimation(Integer estimation) {
         this.estimation = estimation;
     }
 
     public EstimationDto(int idEstimation,
                          int idUser,
                          int idRequirement,
-                         int estimation) {
+                         Integer estimation) {
         this.idEstimation = idEstimation;
         this.idUser = idUser;
         this.idRequirement = idRequirement;
