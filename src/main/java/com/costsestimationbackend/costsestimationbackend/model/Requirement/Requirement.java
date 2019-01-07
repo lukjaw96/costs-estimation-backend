@@ -4,7 +4,6 @@ import com.costsestimationbackend.costsestimationbackend.model.Estimation.Estima
 import com.costsestimationbackend.costsestimationbackend.model.Project.Project;
 
 import javax.persistence.*;
-import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -13,7 +12,7 @@ public class Requirement {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int idRequirement;
+    private Integer idRequirement;
 
     @Column
     private String name;
@@ -30,11 +29,11 @@ public class Requirement {
     @Column
     private String finalCost;
 
-    public int getIdRequirement() {
+    public Integer getIdRequirement() {
         return idRequirement;
     }
 
-    public void setIdRequirement(int idRequirement) {
+    public void setIdRequirement(Integer idRequirement) {
         this.idRequirement = idRequirement;
     }
 

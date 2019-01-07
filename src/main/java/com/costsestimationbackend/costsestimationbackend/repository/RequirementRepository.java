@@ -11,9 +11,6 @@ public interface RequirementRepository extends CrudRepository<Requirement, Integ
     Iterable<Requirement> findByProjects_IdProject(Integer idProject);
     Requirement findByName(String name);
 
-//    @Query("SELECT new com.costsestimationbackend.costsestimationbackend.model.Requirement.RequirementParamsDto()")
-////    Collection<RequirementParamsDto> findAllActiveUsers();
-
     @Query(value = "select id_requirement AS idReq, avg(estimation) AS average, max(estimation) AS maximum, min(estimation) AS minimum from estimation_database.estimation group by id_requirement", nativeQuery = true)
     List<RequirementsParams> getRequirementsParams();
 }

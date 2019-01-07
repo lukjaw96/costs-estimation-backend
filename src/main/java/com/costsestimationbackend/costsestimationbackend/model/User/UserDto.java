@@ -2,18 +2,18 @@ package com.costsestimationbackend.costsestimationbackend.model.User;
 
 public class UserDto {
 
-    private int idUser;
+    private Integer idUser;
     private String firstName;
     private String lastName;
     private String username;
     private String password;
     private String role;
 
-    public int getIdUser() {
+    public Integer getIdUser() {
         return idUser;
     }
 
-    public void setIdUser(int idUser) {
+    public void setIdUser(Integer idUser) {
         this.idUser = idUser;
     }
 
@@ -57,7 +57,7 @@ public class UserDto {
         this.role = role;
     }
 
-    public UserDto(int idUser,
+    public UserDto(Integer idUser,
                    String firstName,
                    String lastName,
                    String username,

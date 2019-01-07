@@ -12,14 +12,14 @@ public interface ProjectService {
 
     List<ProjectDto> findAll();
 
-    void delete(int id);
+    void delete(Integer id);
 
-    ProjectDto findById(int id);
+    ProjectDto findById(Integer id);
 
     ProjectDto update(ProjectDto projectDto);
 
-    void addRequirementToProject(int idProject, int idRequirement);
+    void addRequirementToProject(Integer idProject, Integer idRequirement);
 
-    List<RequirementDto> getProjectRequirements(int idProject);
+    List<RequirementDto> getProjectRequirements(Integer idProject);
 
 }

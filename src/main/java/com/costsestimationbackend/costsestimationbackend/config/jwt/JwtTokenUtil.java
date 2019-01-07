@@ -1,12 +1,11 @@
 package com.costsestimationbackend.costsestimationbackend.config.jwt;
 
+import com.costsestimationbackend.costsestimationbackend.model.User.User;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
-
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
-import com.costsestimationbackend.costsestimationbackend.model.User.User;
 import org.springframework.stereotype.Component;
 
 import java.io.Serializable;
@@ -14,8 +13,8 @@ import java.util.Arrays;
 import java.util.Date;
 import java.util.function.Function;
 
-import static com.costsestimationbackend.costsestimationbackend.model.Constants.SIGNING_KEY;
 import static com.costsestimationbackend.costsestimationbackend.model.Constants.ACCESS_TOKEN_VALIDITY_SECONDS;
+import static com.costsestimationbackend.costsestimationbackend.model.Constants.SIGNING_KEY;
 
 @Component
 public class JwtTokenUtil implements Serializable {

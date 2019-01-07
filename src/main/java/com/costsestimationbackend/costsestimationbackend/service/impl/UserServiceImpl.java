@@ -1,13 +1,10 @@
 package com.costsestimationbackend.costsestimationbackend.service.impl;
 
-import com.costsestimationbackend.costsestimationbackend.model.Project.Project;
-import com.costsestimationbackend.costsestimationbackend.model.Project.ProjectDto;
 import com.costsestimationbackend.costsestimationbackend.model.User.User;
 import com.costsestimationbackend.costsestimationbackend.model.User.UserDto;
 import com.costsestimationbackend.costsestimationbackend.model.User.UserPasswordUpdate;
 import com.costsestimationbackend.costsestimationbackend.repository.UserRepository;
 import com.costsestimationbackend.costsestimationbackend.service.UserService;
-import com.costsestimationbackend.costsestimationbackend.validator.TextValidator;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
@@ -19,7 +16,6 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import javax.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -65,10 +61,10 @@ public class UserServiceImpl implements UserDetailsService, UserService {
     }
 
     @Override
-    public UserDto findById(int id) {
+    public UserDto findById(Integer id) {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         String username = auth.getName();
-        int idUser = userRepository.findByUsername(username).getIdUser();
+        Integer idUser = userRepository.findByUsername(username).getIdUser();
 
         if (id == idUser) {
 
@@ -111,7 +107,7 @@ public class UserServiceImpl implements UserDetailsService, UserService {
     }
 
     @Override
-    public void delete(int id) {
+    public void delete(Integer id) {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         String username = auth.getName();
         Integer idUser = findByUsername(username).getIdUser();

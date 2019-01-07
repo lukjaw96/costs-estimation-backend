@@ -29,7 +29,7 @@ public class RequirementServiceImpl implements RequirementService {
     private UserRepository userRepository;
 
     @Override
-    public RequirementDto findById(int id) {
+    public RequirementDto findById(Integer id) {
 
         Optional<Requirement> optionalRequirement = requirementRepository.findById(id);
         Requirement newRequirement = optionalRequirement.isPresent() ? optionalRequirement.get() : null;
@@ -65,38 +65,23 @@ public class RequirementServiceImpl implements RequirementService {
     @Override
     public Requirement save(RequirementDto requirement) {
         if(requirement.getName() != null){
-
         Pattern patternName = Pattern.compile("\\s");
         Matcher matcherName = patternName.matcher(requirement.getName());
         boolean foundSpacesInName = matcherName.find();
-
         boolean foundExistingRequirementInRepository = false;
-
         if (requirementRepository.findByName(requirement.getName()) != null) {
             foundExistingRequirementInRepository = true;
         }
-
-        if (
-                !(
-                        requirement.getName() == "" ||
-                                foundSpacesInName ||
-                                foundExistingRequirementInRepository)
-
-        ) {
+        if (!(requirement.getName() == "" || foundSpacesInName || foundExistingRequirementInRepository)) {
             Requirement newRequirement = new Requirement();
-
             newRequirement.setIdRequirement(requirement.getIdRequirement());
             newRequirement.setName(requirement.getName());
             newRequirement.setDescription(requirement.getDescription());
             newRequirement.setAuthor(requirement.getAuthor());
             newRequirement.setCreationDate(requirement.getCreationDate());
             newRequirement.setFinalCost(requirement.getFinalCost());
-
             return requirementRepository.save(newRequirement);
         }
-
-
-
     }
         return null;
     }
@@ -114,13 +99,7 @@ public class RequirementServiceImpl implements RequirementService {
                 foundExistingRequirementInRepository = true;
             }
 
-            if (
-                    !(requirementDto.getName() == null ||
-                            requirementDto.getName() == "" ||
-                            foundSpacesInName ||
-                            foundExistingRequirementInRepository)
-
-            ) {
+            if (!(requirementDto.getName() == null || requirementDto.getName() == "" || foundSpacesInName || foundExistingRequirementInRepository)) {
                 Optional<Requirement> optionalRequirement = requirementRepository.findById(requirementDto.getIdRequirement());
                 Requirement requirement = optionalRequirement.isPresent() ? optionalRequirement.get() : null;
                 if (requirement != null) {
@@ -130,16 +109,11 @@ public class RequirementServiceImpl implements RequirementService {
                 return requirementDto;
             }
         }
-
-
         return null;
-
-
-
     }
 
     @Override
-    public void delete(int id) {
+    public void delete(Integer id) {
         requirementRepository.deleteById(id);
     }
 
@@ -152,16 +126,12 @@ public class RequirementServiceImpl implements RequirementService {
 
     @Transactional
     @Override
-    public List<EstimationDto> getRequirementEstimations(int idRequirement) {
-
+    public List<EstimationDto> getRequirementEstimations(Integer idRequirement) {
         Optional<Requirement> optionalRequirement = requirementRepository.findById(idRequirement);
         Requirement requirement = optionalRequirement.isPresent() ? optionalRequirement.get() : null;
-
         Hibernate.initialize(requirement.getEstimations());
-
         List<EstimationDto> listEstimations = new ArrayList<>();
         for (Estimation est : requirement.getEstimations()) {
-
             EstimationDto newEstimation = new EstimationDto(
                     est.getIdEstimation(),
                     est.getUser().getIdUser(),

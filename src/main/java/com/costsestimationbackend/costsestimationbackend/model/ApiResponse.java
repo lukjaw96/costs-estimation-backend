@@ -2,21 +2,21 @@ package com.costsestimationbackend.costsestimationbackend.model;
 
 public class ApiResponse<T> {
 
-    private int status;
+    private Integer status;
     private String message;
     private Object result;
 
-    public ApiResponse(int status, String message, Object result) {
+    public ApiResponse(Integer status, String message, Object result) {
         this.status = status;
         this.message = message;
         this.result = result;
     }
 
-    public int getStatus() {
+    public Integer getStatus() {
         return status;
     }
 
-    public void setStatus(int status) {
+    public void setStatus(Integer status) {
         this.status = status;
     }
 

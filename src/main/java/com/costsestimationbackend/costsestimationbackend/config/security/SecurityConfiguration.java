@@ -3,7 +3,6 @@ package com.costsestimationbackend.costsestimationbackend.config.security;
 import com.costsestimationbackend.costsestimationbackend.config.jwt.JwtAuthenticationEntryPoint;
 import com.costsestimationbackend.costsestimationbackend.config.jwt.JwtAuthenticationFilter;
 import com.costsestimationbackend.costsestimationbackend.repository.UserRepository;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

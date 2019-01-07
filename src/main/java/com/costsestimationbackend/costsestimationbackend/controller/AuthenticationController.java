@@ -6,7 +6,6 @@ import com.costsestimationbackend.costsestimationbackend.model.AuthToken;
 import com.costsestimationbackend.costsestimationbackend.model.LoginUser;
 import com.costsestimationbackend.costsestimationbackend.model.User.User;
 import com.costsestimationbackend.costsestimationbackend.service.UserService;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;

@@ -12,7 +12,7 @@ public class Project {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int idProject;
+    private Integer idProject;
 
     @Column
     @NotNull
@@ -33,11 +33,11 @@ public class Project {
     @Column
     private String endDate;
 
-    public int getIdProject() {
+    public Integer getIdProject() {
         return idProject;
     }
 
-    public void setIdProject(int idProject) {
+    public void setIdProject(Integer idProject) {
         this.idProject = idProject;
     }
 

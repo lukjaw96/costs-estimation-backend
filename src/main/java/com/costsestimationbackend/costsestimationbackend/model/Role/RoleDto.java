@@ -2,11 +2,11 @@ package com.costsestimationbackend.costsestimationbackend.model.Role;
 
 public class RoleDto {
 
-    public int getIdRole() {
+    public Integer getIdRole() {
         return idRole;
     }
 
-    public void setIdRole(int idRole) {
+    public void setIdRole(Integer idRole) {
         this.idRole = idRole;
     }
 
@@ -26,16 +26,16 @@ public class RoleDto {
         this.name = name;
     }
 
-    public RoleDto(int idRole, String code, String name) {
+    public RoleDto(Integer idRole, String code, String name) {
         this.idRole = idRole;
         this.code = code;
         this.name = name;
     }
 
-    private int idRole;
+    private Integer idRole;
     private String code;
     private String name;
 
-    public RoleDto() {};
+    public RoleDto() {}
 
 }

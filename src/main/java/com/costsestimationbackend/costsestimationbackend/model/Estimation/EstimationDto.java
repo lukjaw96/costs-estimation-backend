@@ -2,46 +2,42 @@ package com.costsestimationbackend.costsestimationbackend.model.Estimation;
 
 public class EstimationDto {
 
-    private int idEstimation;
-    private int idUser;
-    private int idRequirement;
+    private Integer idEstimation;
+    private Integer idUser;
+    private Integer idRequirement;
     private Integer estimation;
 
-    public int getIdEstimation() {
+    public Integer getIdEstimation() {
         return idEstimation;
     }
-
-    public void setIdEstimation(int idEstimation) {
+    public void setIdEstimation(Integer idEstimation) {
         this.idEstimation = idEstimation;
     }
 
-    public int getIdUser() {
+    public Integer getIdUser() {
         return idUser;
     }
-
-    public void setIdUser(int idUser) {
+    public void setIdUser(Integer idUser) {
         this.idUser = idUser;
     }
 
-    public int getIdRequirement() {
+    public Integer getIdRequirement() {
         return idRequirement;
     }
-
-    public void setIdRequirement(int idRequirement) {
+    public void setIdRequirement(Integer idRequirement) {
         this.idRequirement = idRequirement;
     }
 
     public Integer getEstimation() {
         return estimation;
     }
-
     public void setEstimation(Integer estimation) {
         this.estimation = estimation;
     }
 
-    public EstimationDto(int idEstimation,
-                         int idUser,
-                         int idRequirement,
+    public EstimationDto(Integer idEstimation,
+                         Integer idUser,
+                         Integer idRequirement,
                          Integer estimation) {
         this.idEstimation = idEstimation;
         this.idUser = idUser;

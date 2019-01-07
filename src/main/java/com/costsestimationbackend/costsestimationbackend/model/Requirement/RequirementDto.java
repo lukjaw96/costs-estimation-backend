@@ -2,7 +2,7 @@ package com.costsestimationbackend.costsestimationbackend.model.Requirement;
 
 public class RequirementDto {
 
-    private int idRequirement;
+    private Integer idRequirement;
 
     private String name;
 
@@ -14,11 +14,11 @@ public class RequirementDto {
 
     private String finalCost;
 
-    public int getIdRequirement() {
+    public Integer getIdRequirement() {
         return idRequirement;
     }
 
-    public void setIdRequirement(int idRequirement) {
+    public void setIdRequirement(Integer idRequirement) {
         this.idRequirement = idRequirement;
     }
 
@@ -62,7 +62,7 @@ public class RequirementDto {
         this.finalCost = finalCost;
     }
 
-    public RequirementDto(int idRequirement,
+    public RequirementDto(Integer idRequirement,
                           String name,
                           String description,
                           String author,

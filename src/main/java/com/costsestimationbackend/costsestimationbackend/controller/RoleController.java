@@ -2,16 +2,14 @@ package com.costsestimationbackend.costsestimationbackend.controller;
 
 import com.costsestimationbackend.costsestimationbackend.model.ApiResponse;
 import com.costsestimationbackend.costsestimationbackend.model.Role.Role;
-import com.costsestimationbackend.costsestimationbackend.model.Role.RoleDto;
-import com.costsestimationbackend.costsestimationbackend.model.User.User;
-import com.costsestimationbackend.costsestimationbackend.model.User.UserDto;
-import com.costsestimationbackend.costsestimationbackend.model.User.UserPasswordUpdate;
 import com.costsestimationbackend.costsestimationbackend.service.RoleService;
-import com.costsestimationbackend.costsestimationbackend.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 

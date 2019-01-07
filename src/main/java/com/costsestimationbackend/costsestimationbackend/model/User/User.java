@@ -1,14 +1,10 @@
 package com.costsestimationbackend.costsestimationbackend.model.User;
 
 import com.costsestimationbackend.costsestimationbackend.model.Estimation.Estimation;
-import com.costsestimationbackend.costsestimationbackend.model.Requirement.Requirement;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
-import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 @Entity
 @Table(name = "USER")
@@ -16,7 +12,7 @@ public class User {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int idUser;
+    private Integer idUser;
 
     @Column
     private String firstName;
@@ -35,11 +31,11 @@ public class User {
     @Column
     private String role;
 
-    public int getIdUser() {
+    public Integer getIdUser() {
         return idUser;
     }
 
-    public void setIdUser(int idUser) {
+    public void setIdUser(Integer idUser) {
         this.idUser = idUser;
     }
 
@@ -83,29 +79,12 @@ public class User {
         this.role = role;
     }
 
-//    @ManyToMany(fetch = FetchType.LAZY)
-//    @JoinTable(
-//            name = "USER_REQUIREMENT",
-//            joinColumns = @JoinColumn(name = "idUser", referencedColumnName = "idUser"),
-//            inverseJoinColumns = @JoinColumn(name = "idRequirement", referencedColumnName = "idRequirement"))
-//    private List<Requirement> requirements;
-//
-//    public List<Requirement> getRequirements() {
-//        return requirements;
-//    }
-//
-//    public void setRequirements(List<Requirement> requirements) {
-//        this.requirements = requirements;
-//    }
-
     @OneToMany(mappedBy = "user")
     private List<Estimation> estimations;
-
 
     public List<Estimation> getEstimations() {
         return estimations;
     }
-
 
     public void setEstimations(List<Estimation> estimations) {
         this.estimations = estimations;

@@ -12,15 +12,15 @@ public interface RequirementService {
 
     List<RequirementDto> findAll();
 
-    void delete(int id);
+    void delete(Integer id);
 
-    RequirementDto findById(int id);
+    RequirementDto findById(Integer id);
 
     RequirementDto update(RequirementDto requirementDto);
 
     List<Requirement> findByIdProject();
 
-    List<EstimationDto> getRequirementEstimations(int idRequirement);
+    List<EstimationDto> getRequirementEstimations(Integer idRequirement);
 
     List<?> getRequirementsParams();
 }

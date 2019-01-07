@@ -2,7 +2,7 @@ package com.costsestimationbackend.costsestimationbackend.model.Project;
 
 public class ProjectDto {
 
-    private int idProject;
+    private Integer idProject;
 
     private String name;
 
@@ -16,11 +16,11 @@ public class ProjectDto {
 
     private String endDate;
 
-    public int getIdProject() {
+    public Integer getIdProject() {
         return idProject;
     }
 
-    public void setIdProject(int idProject) {
+    public void setIdProject(Integer idProject) {
         this.idProject = idProject;
     }
 
@@ -72,7 +72,7 @@ public class ProjectDto {
         this.endDate = endDate;
     }
 
-    public ProjectDto(int idProject,
+    public ProjectDto(Integer idProject,
                       String name,
                       String description,
                       String author,

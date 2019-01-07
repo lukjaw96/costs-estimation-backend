@@ -27,7 +27,7 @@ public class RequirementController {
     }
 
     @GetMapping("/{id}")
-    public ApiResponse<Requirement> getOne(@PathVariable int id){
+    public ApiResponse<Requirement> getOne(@PathVariable Integer id){
         return new ApiResponse<>(HttpStatus.OK.value(), "Requirement fetched successfully.",requirementService.findById(id));
     }
 
@@ -45,14 +45,14 @@ public class RequirementController {
 
     @PreAuthorize("hasRole('ANALYST')")
     @DeleteMapping("/{id}")
-    public ApiResponse<Void> delete(@PathVariable int id) {
+    public ApiResponse<Void> delete(@PathVariable Integer id) {
         requirementService.delete(id);
         return new ApiResponse<>(HttpStatus.OK.value(), "Requirement deleted successfully.", null);
     }
 
     @PreAuthorize("hasRole('PROJECT_MANAGER')")
     @GetMapping(path = "/{idRequirement}/estimations")
-    public ApiResponse<List<Estimation>> getRequirementEstimations(@PathVariable int idRequirement) {
+    public ApiResponse<List<Estimation>> getRequirementEstimations(@PathVariable Integer idRequirement) {
         return new ApiResponse<>(HttpStatus.OK.value(), "Requirement estimations fetched successfully", requirementService.getRequirementEstimations(idRequirement));
     }
 

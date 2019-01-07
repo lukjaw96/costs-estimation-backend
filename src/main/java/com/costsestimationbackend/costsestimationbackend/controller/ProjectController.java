@@ -32,7 +32,7 @@ public class ProjectController {
     }
 
     @GetMapping("/{id}")
-    public ApiResponse<User> getOne(@PathVariable int id) {
+    public ApiResponse<User> getOne(@PathVariable Integer id) {
         return new ApiResponse<>(HttpStatus.OK.value(), "Project fetched successfully.", projectService.findById(id));
     }
 
@@ -50,7 +50,7 @@ public class ProjectController {
 
     @PreAuthorize("hasRole('PROJECT_MANAGER')")
     @DeleteMapping("/{id}")
-    public ApiResponse<Void> delete(@PathVariable int id) {
+    public ApiResponse<Void> delete(@PathVariable Integer id) {
         projectService.delete(id);
         return new ApiResponse<>(HttpStatus.OK.value(), "Project deleted successfully.", null);
     }
@@ -58,14 +58,14 @@ public class ProjectController {
     @PreAuthorize("hasRole('ANALYST')")
     //adding requirement to specific project
     @PostMapping(path = "/{idProject}/requirements/add/{idRequirement}")
-    public ApiResponse<Void> addRequirementToProject(@PathVariable int idProject, @PathVariable int idRequirement) {
+    public ApiResponse<Void> addRequirementToProject(@PathVariable Integer idProject, @PathVariable Integer idRequirement) {
         projectService.addRequirementToProject(idProject, idRequirement);
         return new ApiResponse<>(HttpStatus.OK.value(), "Requirements added successfully to project.", null);
     }
 
     //getting requirement of specific project
     @GetMapping(path = "/{idProject}/requirements")
-    public ApiResponse<List<Requirement>> getProjectRequirements(@PathVariable int idProject) {
+    public ApiResponse<List<Requirement>> getProjectRequirements(@PathVariable Integer idProject) {
         return new ApiResponse<>(HttpStatus.OK.value(), "Project requirements fetched successfully", projectService.getProjectRequirements(idProject));
     }
 }

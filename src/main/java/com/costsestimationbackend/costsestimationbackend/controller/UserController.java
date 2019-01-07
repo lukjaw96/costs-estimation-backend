@@ -5,7 +5,6 @@ import com.costsestimationbackend.costsestimationbackend.model.User.User;
 import com.costsestimationbackend.costsestimationbackend.model.User.UserDto;
 import com.costsestimationbackend.costsestimationbackend.model.User.UserPasswordUpdate;
 import com.costsestimationbackend.costsestimationbackend.service.UserService;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -28,7 +27,7 @@ public class UserController {
     }
 
     @GetMapping("/{id}")
-    public ApiResponse<User> getOne(@PathVariable int id){
+    public ApiResponse<User> getOne(@PathVariable Integer id){
         return new ApiResponse<>(HttpStatus.OK.value(), "User fetched successfully.",userService.findById(id));
     }
 
@@ -57,7 +56,7 @@ public class UserController {
 
     @PreAuthorize("hasRole('ADMIN')")
     @DeleteMapping("/{id}")
-    public ApiResponse<Void> delete(@PathVariable int id) {
+    public ApiResponse<Void> delete(@PathVariable Integer id) {
         userService.delete(id);
         return new ApiResponse<>(HttpStatus.OK.value(), "User deleted successfully.", null);
     }

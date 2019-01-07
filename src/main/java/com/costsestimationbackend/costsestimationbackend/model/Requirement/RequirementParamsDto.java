@@ -2,11 +2,11 @@ package com.costsestimationbackend.costsestimationbackend.model.Requirement;
 
 public class RequirementParamsDto {
 
-    public int getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
@@ -34,7 +34,7 @@ public class RequirementParamsDto {
         this.average = average;
     }
 
-    public RequirementParamsDto(int id, Double maximum, Double minimum, Double average) {
+    public RequirementParamsDto(Integer id, Double maximum, Double minimum, Double average) {
         this.id = id;
         this.maximum = maximum;
         this.minimum = minimum;
@@ -44,7 +44,7 @@ public class RequirementParamsDto {
     public RequirementParamsDto() {
     }
 
-    private int id;
+    private Integer id;
     private Double maximum;
     private Double minimum;
     private Double average;
