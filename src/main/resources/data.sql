@@ -1,25 +1,37 @@
-INSERT INTO user(id_user, first_name, last_name, password, role, username) VALUES(1, 'adminfirst', 'adminlast', '$2a$04$I9Q2sDc4QGGg5WNTLmsz0.fvGv3OjoZyj81PrSFyGOqMphqfS2qKu', 'ADMIN', 'admin');
-INSERT INTO user(id_user, first_name, last_name, password, role, username) VALUES(2, 'managerfirst', 'managerlast', '$2a$04$I9Q2sDc4QGGg5WNTLmsz0.fvGv3OjoZyj81PrSFyGOqMphqfS2qKu', 'PROJECT_MANAGER', 'manager');
-INSERT INTO user(id_user, first_name, last_name, password, role, username) VALUES(3, 'analystfirst', 'analystlast', '$2a$04$I9Q2sDc4QGGg5WNTLmsz0.fvGv3OjoZyj81PrSFyGOqMphqfS2qKu', 'ANALYST', 'analyst');
-INSERT INTO user(id_user, first_name, last_name, password, role, username) VALUES(4, 'expertfirst1', 'expertlast1', '$2a$04$I9Q2sDc4QGGg5WNTLmsz0.fvGv3OjoZyj81PrSFyGOqMphqfS2qKu', 'EXPERT', 'expert1');
-INSERT INTO user(id_user, first_name, last_name, password, role, username) VALUES(5, 'expertfirst2', 'expertlast2', '$2a$04$I9Q2sDc4QGGg5WNTLmsz0.fvGv3OjoZyj81PrSFyGOqMphqfS2qKu', 'EXPERT', 'expert2');
-INSERT INTO user(id_user, first_name, last_name, password, role, username) VALUES(6, 'expertfirst3', 'expertlast3', '$2a$04$I9Q2sDc4QGGg5WNTLmsz0.fvGv3OjoZyj81PrSFyGOqMphqfS2qKu', 'EXPERT', 'expert3');
+INSERT INTO user SELECT 1 as id_user,
+ 'adminfirst' as first_name,
+ 'adminlast' as last_name,
+ '$2a$04$I9Q2sDc4QGGg5WNTLmsz0.fvGv3OjoZyj81PrSFyGOqMphqfS2qKu' as password,
+ 'ADMIN' as role,
+ 'admin' as username
+FROM user
+WHERE username = 'admin'
+HAVING COUNT(*) = 0;
 
+INSERT INTO role SELECT 1 as id_role,
+ 'ADMIN' as code,
+ 'Admin' as name
+FROM role
+WHERE code = 'ADMIN'
+HAVING COUNT(*) = 0;
 
-INSERT INTO project(id_project, author, description, end_date, name, start_date, status) VALUES(1, 'authorfirst', 'cool project', null, 'First Project', 'grudzien', 'open');
-INSERT INTO requirement(id_requirement, author, name) VALUES ('1', 'authorfirst', 'first requirement');
+INSERT INTO role SELECT 2 as id_role,
+ 'PROJECT_MANAGER' as code,
+ 'Project manager' as name
+FROM role
+WHERE code = 'PROJECT_MANAGER'
+HAVING COUNT(*) = 0;
 
---
---INSERT INTO `estimation_database`.`estimation` (`id_estimation`, `estimation`, `id_requirement`, `id_user`) VALUES ('1', '1', '1', '4');
---INSERT INTO `estimation_database`.`estimation` (`id_estimation`, `estimation`, `id_requirement`, `id_user`) VALUES ('2', '2', '2', '4');
---INSERT INTO `estimation_database`.`estimation` (`id_estimation`, `estimation`, `id_requirement`, `id_user`) VALUES ('3', '3', '3', '4');
---INSERT INTO `estimation_database`.`estimation` (`id_estimation`, `estimation`, `id_requirement`, `id_user`) VALUES ('4', '4', '4', '4');
---INSERT INTO `estimation_database`.`estimation` (`id_estimation`, `estimation`, `id_requirement`, `id_user`) VALUES ('5', '3', '1', '5');
---INSERT INTO `estimation_database`.`estimation` (`id_estimation`, `estimation`, `id_requirement`, `id_user`) VALUES ('6', '3', '2', '5');
---INSERT INTO `estimation_database`.`estimation` (`id_estimation`, `estimation`, `id_requirement`, `id_user`) VALUES ('7', '3', '3', '5');
---INSERT INTO `estimation_database`.`estimation` (`id_estimation`, `estimation`, `id_requirement`, `id_user`) VALUES ('8', '3', '4', '5');
---
-INSERT INTO `estimation_database`.`role` (`id_role`, `code`, `name`) VALUES (1, 'ADMIN', 'Admin');
-INSERT INTO `estimation_database`.`role` (`id_role`, `code`, `name`) VALUES (2, 'PROJECT_MANAGER', 'Project manager');
-INSERT INTO `estimation_database`.`role` (`id_role`, `code`, `name`) VALUES (3, 'EXPERT', 'Expert');
-INSERT INTO `estimation_database`.`role` (`id_role`, `code`, `name`) VALUES (4, 'ANALYST', 'Analyst');
+INSERT INTO role SELECT 3 as id_role,
+ 'EXPERT' as code,
+ 'Expert' as name
+FROM role
+WHERE code = 'EXPERT'
+HAVING COUNT(*) = 0;
+
+INSERT INTO role SELECT 4 as id_role,
+ 'ANALYST' as code,
+ 'Analyst' as name
+FROM role
+WHERE code = 'ANALYST'
+HAVING COUNT(*) = 0;

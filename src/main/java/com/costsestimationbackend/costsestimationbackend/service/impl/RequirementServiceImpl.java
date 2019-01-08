@@ -117,13 +117,6 @@ public class RequirementServiceImpl implements RequirementService {
         requirementRepository.deleteById(id);
     }
 
-    @Override
-    public List<Requirement> findByIdProject() {
-        List<Requirement> list = new ArrayList<>();
-        requirementRepository.findByProjects_IdProject(1).iterator().forEachRemaining(list::add);
-        return list;
-    }
-
     @Transactional
     @Override
     public List<EstimationDto> getRequirementEstimations(Integer idRequirement) {

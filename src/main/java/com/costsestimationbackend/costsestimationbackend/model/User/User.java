@@ -23,9 +23,7 @@ public class User {
     @Column(nullable = false, unique = true)
     private String username;
 
-    //@Column(nullable = false)
 	@JsonIgnore
-    //used to ignore sending password when getting all users
     private String password;
 
     @Column

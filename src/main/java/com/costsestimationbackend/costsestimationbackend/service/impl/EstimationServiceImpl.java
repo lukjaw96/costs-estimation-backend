@@ -57,16 +57,22 @@ public class EstimationServiceImpl implements EstimationService {
     @Override
     public Estimation save(EstimationDto estimationDto) {
         if(estimationDto.getEstimation() != null) {
-            if(estimationRepository.checkIfEstimationAlreadyExist().isEmpty()) {
+            if(estimationRepository.checkIfEstimationAlreadyExist(estimationDto.getIdUser(), estimationDto.getIdRequirement()).isEmpty()) {
                 Estimation estimation = new Estimation();
                 estimation.setEstimation(estimationDto.getEstimation());
                 Optional<User> optionalUser = userRepository.findById(estimationDto.getIdUser());
+                if(optionalUser.isPresent()) {
+                    optionalUser.get().setEstimations(null);
+                }
                 estimation.setUser(optionalUser.isPresent() ? optionalUser.get() : null);
-                Hibernate.initialize((optionalUser.isPresent() ? optionalUser.get() : null).getEstimations());
                 Optional<Requirement> optionalRequirement = requirementRepository.findById(estimationDto.getIdRequirement());
+                if(optionalRequirement.isPresent()) {
+                    optionalRequirement.get().setEstimations(null);
+                }
+                if(optionalRequirement.isPresent()) {
+                    optionalRequirement.get().setProjects(null);
+                }
                 estimation.setRequirement(optionalRequirement.isPresent() ? optionalRequirement.get() : null);
-                Hibernate.initialize((optionalRequirement.isPresent() ? optionalRequirement.get() : null).getProjects());
-                Hibernate.initialize((optionalRequirement.isPresent() ? optionalRequirement.get() : null).getEstimations());
                 return estimationRepository.save(estimation);
             }
         }

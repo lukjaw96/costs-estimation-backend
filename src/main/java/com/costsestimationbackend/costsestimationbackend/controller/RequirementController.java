@@ -21,6 +21,7 @@ public class RequirementController {
     @Autowired
     private RequirementService requirementService;
 
+    @PreAuthorize("hasRole('ANALYST') OR hasRole('PROJECT_MANAGER') OR hasRole('EXPERT')")
     @GetMapping()
     public ApiResponse<List<Requirement>> getAllRequirements(){
         return new ApiResponse<>(HttpStatus.OK.value(), "Requirements list fetched successfully.", requirementService.findAll());

@@ -18,8 +18,6 @@ public interface RequirementService {
 
     RequirementDto update(RequirementDto requirementDto);
 
-    List<Requirement> findByIdProject();
-
     List<EstimationDto> getRequirementEstimations(Integer idRequirement);
 
     List<?> getRequirementsParams();
